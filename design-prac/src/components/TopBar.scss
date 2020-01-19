@@ -1,0 +1,13 @@
+.TopBar{
+    background-color: violet;
+    border: 0.2em solid purple;
+    border-radius: 5px;
+    box-sizing: borderBox;
+    color: white;
+    .phone{
+        text-align: center;
+    }
+    .computer{
+        text-align: left;
+    }
+}
