@@ -1,13 +1,38 @@
 .TopBar{
+
+    box-sizing: border-box;
+    overflow: hidden;
     background-color: violet;
-    border: 0.2em solid purple;
+    border: 0.2rem solid purple;
     border-radius: 5px;
-    box-sizing: borderBox;
     color: white;
     .phone{
-        text-align: center;
+        border: 0.1rem solid gray;
+        
+        text-align: center;        
     }
     .computer{
+        border: 0.1rem solid gray;
+        float: left;
         text-align: left;
+    }
+
+    .search-container{
+        border: 0.2rem solid blue;
+        float: right;
+        display: flex;
+        align-items: center;
+        .search-icon{
+            float: left;
+        }
+        .search-input{
+            float: left;
+        }
+    }
+
+    .width{
+        display: block;
+        border: 0.1rem solid gray;
+        text-align: center;        
     }
 }

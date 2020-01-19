@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SearchIcon from '@material-ui/icons/Search';
 import './TopBar.scss'
 
 class TopBar extends Component {
@@ -29,7 +30,14 @@ class TopBar extends Component {
     render(){
         return(
             <div className="TopBar">
-                <div className={this.state.mode}>TopBar {this.state.width}</div>
+                <div className="width"> width: {this.state.width}</div>
+
+                <div className="search-container">
+                    <SearchIcon className="search-icon"/>
+                    <input className="search-input" type="text" placeholder="Search.."/>
+                </div>
+                <div className={this.state.mode}>Title</div>     
+                
             </div>
         )       
     }
