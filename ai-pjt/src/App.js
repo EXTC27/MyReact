@@ -15,9 +15,18 @@ class App extends Component{
       imgURL: '',
       imgUpload: this.imgUpload,
       imgInit: this.imgInit,
+      
       innerW: window.innerWidth,
-      innerH: window.innerHeight
+      innerH: window.innerHeight,
+
+      currentMode: '',
+      changeMode: this.changeMode,
     }
+  }
+
+  componentWillUnmount(){
+    // window.removeEventListener('resize', this.changeSize)
+    sessionStorage.clear()
   }
 
   imgUpload = (e) => {
@@ -40,14 +49,26 @@ class App extends Component{
     })
     this.props.history.push('/')
   }
+  changeMode = (e) => {
+    const _curMode = e.currentTarget.id
+    if(_curMode === this.state.mode){
+      this.setState({
+        mode: ''
+      })
+      sessionStorage.setItem('mode', '')
+    }
+    else{
+      this.setState({
+        mode: _curMode
+      })
+      sessionStorage.setItem('mode', _curMode)
+    }
+  }
 
   // componentDidMount(){
   //   window.addEventListener('resize', this.changeSize)
   // }
-  componentWillUnmount(){
-    // window.removeEventListener('resize', this.changeSize)
-    sessionStorage.clear()
-  }
+  
   // changeSize = () => {
   //   this.setState({
   //     innerW: window.innerWidth,

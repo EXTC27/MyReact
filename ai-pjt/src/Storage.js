@@ -6,7 +6,11 @@ export const Storage = React.createContext(
     imgURL: '',
     imgUpload: () => {},
     imgInit: () => {},
+
     innerW: 0,
     innerH: 0,
+
+    currentMode: 0,
+    changeMode: () => {},
   }
 );
