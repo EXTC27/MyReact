@@ -32,7 +32,7 @@ class TopMenu extends Component {
       {
         store => (
           <StTopMenuCont>
-            <IconButton onClick={store.backToMain}><KeyboardBackspace/></IconButton>
+            <IconButton id="backToMain" onClick={store.changeMode}><KeyboardBackspace/></IconButton>
             <div className="mid">
               <IconButton><Undo/></IconButton>
               <IconButton><Redo/></IconButton>  

@@ -4,18 +4,11 @@ import styled from 'styled-components';
 import {Zoom, Button} from '@material-ui/core';
 
 class Modal extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      msg: ''
-    }
-  }
+
   confirmMsg = () => {
-    if(this.props.mode === 'origin'){
-      return '변경한 값들을\n전부 초기화하시겠습니까?'.split('\n').map(function(item, key){
-        return(<span key={key}>{item}<br/></span>)
-      })
-    }
+    return this.props.msg.split('\n').map(function(item, key){
+      return(<span key={key}>{item}<br/></span>)
+    })
   }
 
   render(){
@@ -28,14 +21,14 @@ class Modal extends Component {
           {
             this.props.pop ? <StOpacityBack/> : null
           }
-          <Zoom in={store.curMode === "origin"} timeout={200} mountOnEnter unmountOnExit>
+          <Zoom in={store.curMode === "origin" || store.curMode === "backToMain"} timeout={200} mountOnEnter unmountOnExit>
           <StModalCont>
             <StConfirmCont>
               <div className="top-deco"/>
               <StMsgCont>{_confirmMsg}</StMsgCont>
               <StBtnCont>
-                <Button id="yes" variant="outlined" onClick={store.confirmToOrigin}>예</Button>
-                <Button id="no" variant="outlined" onClick={store.confirmToOrigin}>아니요</Button>
+                <Button id="yes" variant="outlined" onClick={store.confirm}>예</Button>
+                <Button id="no" variant="outlined" onClick={store.confirm}>아니요</Button>
               </StBtnCont>
             </StConfirmCont>
           </StModalCont>

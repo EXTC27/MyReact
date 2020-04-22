@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from 'styled-components'
-import { Stage, Layer, Image } from "react-konva";
+import {Stage, Layer,} from "react-konva";
 
 class Canvas extends Component {
   constructor(props) {
@@ -12,12 +12,14 @@ class Canvas extends Component {
       stageWidth: 0,
       stageHeight: 0,
       scale: 0,
-      X: 0,
-      Y: 0,
     };
   }
 
   componentDidMount(){
+    this.setOriginImage()
+  }
+
+  setOriginImage = () => {
     const _img = new window.Image();
     _img.src = this.props.src;
     _img.onload = () => {
@@ -50,6 +52,9 @@ class Canvas extends Component {
           })
         }
       })
+      .then(()=>{
+        this.props.store.imgInit(this.state.img)
+      })
     }
   }
 
@@ -58,10 +63,10 @@ class Canvas extends Component {
       this.setState(state, resolve);
     });
   };
-  
+
   render() {
     return (
-      <StCanvasCont id="canvas-container" width={this.props.width} height={this.props.height / 2}>
+      <StCanvasCont id="canvas-container">
         <Stage
           style={{"display":"flex"}}
           width={this.state.stageWidth}
@@ -70,7 +75,7 @@ class Canvas extends Component {
           scaleY={this.state.scale}
         >
           <Layer>
-            <Image image={this.state.img}/>
+            {this.props.store.imgList}
           </Layer>
         </Stage>
       </StCanvasCont>

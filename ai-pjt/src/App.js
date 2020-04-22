@@ -1,26 +1,30 @@
 import React, {Component} from 'react';
-import { Route, withRouter} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import {Storage} from './components/Storage'
 import MainPage from './components/MainPage'
 import EditorPage from './components/EditorPage'
+import {Image,} from "react-konva";
 
 class App extends Component{
 
   constructor(props){
     super(props)
     this.state = {
-      imgFile: '',
-      imgURL: '',
-      imgUpload: this.imgUpload,
-      backToMain: this.backToMain,
-
       innerW: window.innerWidth,
       innerH: window.innerHeight,
+
+      imgFile: '',
+      imgURL: '',
+      imgList: [],
+      imgUpload: this.imgUpload,
+      imgInit: this.imgInit,
+
+      backToMain: this.backToMain,
 
       curMode: '',
       changeMode: this.changeMode,
 
-      confirmToOrigin: this.confirmToOrigin,
+      confirm: this.confirm,
     }
   }
 
@@ -39,10 +43,19 @@ class App extends Component{
     reader.readAsDataURL(_imgFile)
   }
 
+  imgInit = (_img) => {
+    this.setState({
+      imgList: this.state.imgList.concat(
+        <Image key={0} id="origin" image={_img}/>
+      )
+    })
+  }
+
   backToMain = () => {
     this.setState({
       imgFile: '',
       imgURL: '',
+      imgList: [],
       curMode: '',
     })    
     this.props.history.push('/')
@@ -64,51 +77,45 @@ class App extends Component{
     }
   }
 
-  confirmToOrigin = (e) => {
+  confirm = (e) => {
     const _confirm = e.currentTarget.id
-    if(_confirm === "yes"){
-      this.setState({
-        curMode: ''
-      })
+
+    if(this.state.curMode === 'origin'){
+      if(_confirm === 'yes'){
+        this.setState({
+          curMode: '',
+          imgList: [this.state.imgList[0]],
+        })
+      }
+      else{
+        this.setState({
+          curMode: ''
+        })
+      }
     }
-    else{
-      this.setState({
-        curMode: ''
-      })
+
+    else if(this.state.curMode === 'backToMain'){
+      if(_confirm === 'yes'){
+        this.backToMain()
+      }
+      else{
+        this.setState({
+          curMode: ''
+        })
+      }
     }
   }
 
-  // componentDidMount(){
-  //   window.addEventListener('resize', this.changeSize)
-  // }
-  
-  // changeSize = () => {
-  //   this.setState({
-  //     innerW: window.innerWidth,
-  //     innerH: window.innerHeight,
-  //   })
-  // }
 
   render(){
     return(
-      // <AppContainer className="app" width={window.innerWidth} height={window.innerHeight}>
       <div className="app">
         <Storage.Provider value={this.state}>
           <Route exact path="/" component={MainPage} />
           <Route path="/Editor" component={EditorPage} />
         </Storage.Provider>
       </div>
-      // </AppContainer>
     )
   }
 }
 export default withRouter(App);
-
-// const AppContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   background-color: mintcream;
-//   width: ${props => props.width}px;
-//   height: ${props => props.height}px;
-// `

@@ -7,55 +7,42 @@ import Canvas from './Canvas';
 import Modal from './Modal';
 
 import styled from 'styled-components';
-import {Slide, Zoom} from '@material-ui/core';
+import {Slide,} from '@material-ui/core';
 
 class EditorPage extends Component {
 
-  // componentDidMount(){
-  //   document.getElementById('save').addEventListener(
-  //     'click',
-  //     () => {
-  //       var stage = document.getElementsByTagName('canvas')[0]
-  //       var dataURL = stage.toDataURL("image/png");
-  //       this.downloadURI(dataURL, 'stage.png');
-  //     },
-  //     false
-  //   );
-  // }
-
-  // downloadURI = (uri, name) => {
-  //   var link = document.createElement('a');
-  //   link.download = name;
-  //   link.href = uri;
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // }
-
   render(){
     sessionStorage.setItem('curPage', 'editor')
-    
     return(
       <Storage.Consumer>
-      {store => (
+      {store => {
+        let _msg = "설정한 값들을\n전부 초기화하시겠습니까?"
+        if(store.curMode === "backToMain"){
+          _msg = "설정한 값들을 무시하고\n뒤로 가시겠습니까?"
+        }
+
+        return(
         <Slide in={true} direction="left">
           <StEditorCont className="editor" width={store.innerW} height={store.innerH}>
             <TopMenu/>
-            <Canvas src={store.imgURL} width={store.innerW} height={store.innerH}/>
+            
+            <Canvas src={store.imgURL} store={store}/>
 
             <Slide in={true} direction="up" mountOnEnter unmountOnExit>
               <BottomMenu/>
             </Slide>
 
-            <Slide in={store.curMode !== "" && store.curMode !== "origin"} direction="up" mountOnEnter unmountOnExit>
+            <Slide in={store.curMode !== "" && store.curMode !== "origin" && store.curMode !== "backToMain"} 
+                  direction="up" mountOnEnter unmountOnExit>
               <DrawerMenu/>
             </Slide>
 
-            <Modal pop={store.curMode === "origin"} mode={store.curMode}/>
+            <Modal pop={store.curMode === "origin" || store.curMode === "backToMain"} msg={_msg}/>
 
           </StEditorCont>
         </Slide>
-      )}
+        )
+      }}
       </Storage.Consumer>
     )
   }
