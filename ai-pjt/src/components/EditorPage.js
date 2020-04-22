@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import {Storage} from '../Storage';
-import TopMenu from './TopMenu';
-import BottomMenu from './BottomMenu';
+import TopMenu from './Menus/TopMenu';
+import BottomMenu from './Menus/BottomMenu';
+import DrawerMenu from './Menus/DrawerMenu';
+import {Storage} from './Storage';
 import Canvas from './Canvas';
+import Modal from './Modal';
+
 import styled from 'styled-components';
-import {Slide} from '@material-ui/core';
+import {Slide, Zoom} from '@material-ui/core';
 
 class EditorPage extends Component {
 
@@ -39,7 +42,17 @@ class EditorPage extends Component {
           <StEditorCont className="editor" width={store.innerW} height={store.innerH}>
             <TopMenu/>
             <Canvas src={store.imgURL} width={store.innerW} height={store.innerH}/>
-            <BottomMenu/>
+
+            <Slide in={true} direction="up" mountOnEnter unmountOnExit>
+              <BottomMenu/>
+            </Slide>
+
+            <Slide in={store.curMode !== "" && store.curMode !== "origin"} direction="up" mountOnEnter unmountOnExit>
+              <DrawerMenu/>
+            </Slide>
+
+            <Modal pop={store.curMode === "origin"} mode={store.curMode}/>
+
           </StEditorCont>
         </Slide>
       )}

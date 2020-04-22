@@ -12,42 +12,42 @@ class BottomMenu extends Component {
       {
         store => (
           <StBottomMenuCont>
-            <StButtonCont id="원본" mode={store.mode} onClick={store.changeMode}>
+            <StButtonCont id="origin" mode={store.curMode} onClick={store.changeMode}>
               <Photo/>
               <label>원본</label>
             </StButtonCont>
 
-            <StButtonCont id="자르기" mode={store.mode} onClick={store.changeMode}>
+            <StButtonCont id="crop" mode={store.curMode} onClick={store.changeMode}>
               <Crop/>
               <label>자르기</label>
             </StButtonCont>
 
-            <StButtonCont id="회전" mode={store.mode} onClick={store.changeMode}>
+            <StButtonCont id="rotate" mode={store.curMode} onClick={store.changeMode}>
               <Cached/>
               <label>회전</label>
             </StButtonCont>
 
-            <StButtonCont id="필터" mode={store.mode} onClick={store.changeMode}>
+            <StButtonCont id="filter" mode={store.curMode} onClick={store.changeMode}>
               <FlipToFront/>
               <label>필터</label>
             </StButtonCont>
 
-            <StButtonCont id="조정" mode={store.mode} onClick={store.changeMode}>
+            <StButtonCont id="adjust" mode={store.curMode} onClick={store.changeMode}>
               <Tune/>
               <label>조정</label>
             </StButtonCont>
 
-            <StButtonCont id="객체찾기" mode={store.mode} onClick={store.changeMode}>
+            <StButtonCont id="object" mode={store.curMode} onClick={store.changeMode}>
               <NaturePeople/>
               <label>객체찾기</label>
             </StButtonCont>
 
-            <StButtonCont id="얼굴인식" mode={store.mode} onClick={store.changeMode}>
+            <StButtonCont id="face" mode={store.curMode} onClick={store.changeMode}>
               <Face/>
               <label>얼굴인식</label>
             </StButtonCont>
 
-            <StButtonCont id="태그생성" mode={store.mode} onClick={store.changeMode}>
+            <StButtonCont id="tag" mode={store.curMode} onClick={store.changeMode}>
               <LocalOffer/>
               <label>태그생성</label>
             </StButtonCont>
@@ -68,23 +68,15 @@ const StBottomMenuCont = styled.div`
   box-sizing: border-box;  
   border-radius: 8px 8px 0 0;
   width: 100%;
+  z-index: 1;
+  position: fixed;
+  bottom: 0;
 `;
-
-// const StButtonListCont = styled.div`
-//   display: flex;
-//   flex-wrap: nowrap;
-//   transform: translateZ(0);
-//   -ms-overflow-style: none;
-//   &::-webkit-scrollbar { 
-//     display: none
-//   }
-//   scroll-behavior: smooth;
-// `;
 
 const StButtonCont = styled(IconButton)`
   width: 3em;
-  color: ${props => props.mode === props.id ? "gray" : "black"};
-
+  /* color: ${props => props.mode === props.id ? "gray" : "black"}; */
+  color: black;
   .MuiIconButton-label{
     display: flex;
     flex-direction: column;

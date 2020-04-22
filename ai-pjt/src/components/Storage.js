@@ -5,12 +5,16 @@ export const Storage = React.createContext(
     imgFile: '',
     imgURL: '',
     imgUpload: () => {},
-    imgInit: () => {},
+    backToMain: () => {},
 
     innerW: 0,
     innerH: 0,
 
-    currentMode: 0,
+    curMode: '',
     changeMode: () => {},
+
+    confirmToOrigin: () => {},
+
+    
   }
 );

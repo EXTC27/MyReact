@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import {Storage} from "../Storage";
-import { Slide, IconButton } from "@material-ui/core";
+import {Storage} from "./Storage";
+import { Slide, Zoom, IconButton } from "@material-ui/core";
 import { PhotoLibrary } from "@material-ui/icons";
 import styled from "styled-components";
 
@@ -16,25 +16,29 @@ class MainPage extends Component {
     if(sessionStorage.getItem('curPage') === 'editor'){
       dir = "right"
     }
+    sessionStorage.clear()
 
     return (
       <Storage.Consumer>
       {store => (
         <Slide in={true} direction={dir}>
           <StMainCont className="main" width={window.innerWidth} height={window.innerHeight}>
-            <StUploadBtn>
-              <input
-                id="imgUpload"
-                type="file"
-                accept="image/jpg,image/png,image/jpeg,image/gif"
-                onChange={store.imgUpload}
-              />
-              <IconButton>
-                <label htmlFor="imgUpload">
-                  <PhotoLibrary />
-                </label>
-              </IconButton>
-            </StUploadBtn>
+            <Zoom in={true} timeout={400}>
+              <StUploadBtn>
+                <input
+                  id="imgUpload"
+                  type="file"
+                  accept="image/jpg,image/png,image/jpeg,image/gif"
+                  onChange={store.imgUpload}
+                />
+                <IconButton>
+                  <label htmlFor="imgUpload">
+                    <PhotoLibrary />
+                  </label>
+                </IconButton>
+                <div>불러오기</div>
+              </StUploadBtn>
+            </Zoom>
           </StMainCont>
         </Slide>
       )}
@@ -54,6 +58,10 @@ const StMainCont = styled.div`
 `;
 
 const StUploadBtn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   input {
     position: absolute;
     width: 1px;
@@ -90,6 +98,10 @@ const StUploadBtn = styled.div`
     color: white;
     width: 3rem;
     height: 3rem;
+  }
+
+  div {
+    color: #009687;
   }
 
 `;

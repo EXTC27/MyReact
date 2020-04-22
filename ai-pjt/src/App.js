@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import { Route, withRouter} from 'react-router-dom';
-import styled from 'styled-components';
-import {Storage} from './Storage'
+import {Storage} from './components/Storage'
 import MainPage from './components/MainPage'
 import EditorPage from './components/EditorPage'
 
 class App extends Component{
-  // static contextType = ImageStorage
 
   constructor(props){
     super(props)
@@ -14,20 +12,18 @@ class App extends Component{
       imgFile: '',
       imgURL: '',
       imgUpload: this.imgUpload,
-      imgInit: this.imgInit,
-      
+      backToMain: this.backToMain,
+
       innerW: window.innerWidth,
       innerH: window.innerHeight,
 
-      currentMode: '',
+      curMode: '',
       changeMode: this.changeMode,
+
+      confirmToOrigin: this.confirmToOrigin,
     }
   }
 
-  componentWillUnmount(){
-    // window.removeEventListener('resize', this.changeSize)
-    sessionStorage.clear()
-  }
 
   imgUpload = (e) => {
     e.preventDefault();
@@ -42,26 +38,43 @@ class App extends Component{
     }
     reader.readAsDataURL(_imgFile)
   }
-  imgInit = () => {
+
+  backToMain = () => {
     this.setState({
       imgFile: '',
-      imgURL: ''
-    })
+      imgURL: '',
+      curMode: '',
+    })    
     this.props.history.push('/')
   }
+
   changeMode = (e) => {
     const _curMode = e.currentTarget.id
-    if(_curMode === this.state.mode){
+    if(_curMode === 'close'){
       this.setState({
-        mode: ''
+        curMode: ''
       })
-      sessionStorage.setItem('mode', '')
+      sessionStorage.setItem('curMode', '')
     }
     else{
       this.setState({
-        mode: _curMode
+        curMode: _curMode
       })
-      sessionStorage.setItem('mode', _curMode)
+      sessionStorage.setItem('curMode', _curMode)
+    }
+  }
+
+  confirmToOrigin = (e) => {
+    const _confirm = e.currentTarget.id
+    if(_confirm === "yes"){
+      this.setState({
+        curMode: ''
+      })
+    }
+    else{
+      this.setState({
+        curMode: ''
+      })
     }
   }
 

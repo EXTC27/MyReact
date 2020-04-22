@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import styled from 'styled-components'
-import Konva from 'konva'
 import { Stage, Layer, Image } from "react-konva";
 
 class Canvas extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       img: null,
       imgWidth: 0,
@@ -88,4 +86,5 @@ const StCanvasCont = styled.div`
   background-color: #333333;
   width: 100%;
   height: 50%;
+  margin-bottom: 65%;
 `
