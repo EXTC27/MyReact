@@ -24,7 +24,7 @@ class EditorPage extends Component {
         return(
         <Slide in={true} direction="left">
           <StEditorCont className="editor" width={store.innerW} height={store.innerH}>
-            <TopMenu/>
+            <TopMenu stageRef={store.stageRef} ratio={store.ratio}/>
             
             <Canvas src={store.imgURL} store={store}/>
 

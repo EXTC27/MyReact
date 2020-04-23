@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Storage} from '../Storage';
 import styled from 'styled-components';
 import {IconButton, } from '@material-ui/core';
-import {SaveAlt, KeyboardBackspace, Undo, Redo} from '@material-ui/icons';
+import {SaveAlt, KeyboardBackspace, Undo, Redo, } from '@material-ui/icons';
 
 
 class TopMenu extends Component {
@@ -10,8 +10,10 @@ class TopMenu extends Component {
     document.getElementById('save').addEventListener(
       'click',
       () => {
-        var stage = document.getElementsByTagName('canvas')[0]
-        var dataURL = stage.toDataURL("image/png");
+        // var stage = document.getElementsByTagName('canvas')[0]
+        // var dataURL = stage.toDataURL("image/png");
+        var stage = this.props.stageRef.getStage()
+        var dataURL = stage.toDataURL({ pixelRatio: Math.round(this.props.ratio) });
         this.downloadURI(dataURL, 'stage.png');
       },
       false
@@ -32,12 +34,14 @@ class TopMenu extends Component {
       {
         store => (
           <StTopMenuCont>
+
             <IconButton id="backToMain" onClick={store.changeMode}><KeyboardBackspace/></IconButton>
             <div className="mid">
               <IconButton><Undo/></IconButton>
               <IconButton><Redo/></IconButton>  
             </div>
-            <IconButton id="save"><SaveAlt/></IconButton>
+            <IconButton id="save" disabled={store.curMode !== ''}><SaveAlt/></IconButton>
+            
           </StTopMenuCont>
         )
       }
