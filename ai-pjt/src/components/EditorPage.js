@@ -24,9 +24,9 @@ class EditorPage extends Component {
         return(
         <Slide in={true} direction="left">
           <StEditorCont className="editor" width={store.innerW} height={store.innerH}>
-            <TopMenu stageRef={store.stageRef} ratio={store.ratio}/>
+            <TopMenu store={store}/>
             
-            <Canvas src={store.imgURL} store={store}/>
+            <Canvas store={store}/>
 
             <Slide in={true} direction="up" mountOnEnter unmountOnExit>
               <BottomMenu/>
@@ -49,6 +49,7 @@ class EditorPage extends Component {
 } export default EditorPage;
 
 const StEditorCont = styled.div`
+  font-family: 'Single Day', cursive;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

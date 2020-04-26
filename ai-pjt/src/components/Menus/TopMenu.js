@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Storage} from '../Storage';
 import styled from 'styled-components';
-import {IconButton, } from '@material-ui/core';
+import {IconButton, Zoom} from '@material-ui/core';
 import {SaveAlt, KeyboardBackspace, Undo, Redo, } from '@material-ui/icons';
 
 
@@ -10,10 +10,15 @@ class TopMenu extends Component {
     document.getElementById('save').addEventListener(
       'click',
       () => {
-        // var stage = document.getElementsByTagName('canvas')[0]
+        // var stage = document.getElementsByTagName('canvas')
         // var dataURL = stage.toDataURL("image/png");
-        var stage = this.props.stageRef.getStage()
-        var dataURL = stage.toDataURL({ pixelRatio: Math.round(this.props.ratio) });
+        const store = this.props.store
+        const _stage = store.stageRef.getStage()
+        const _ratio = store.stageHistory[store.historyIdx].ratio
+        // if(_ratio < 1){
+        //   _ratio = 1
+        // }
+        const dataURL = _stage.toDataURL({ pixelRatio: Math.round(_ratio) });
         this.downloadURI(dataURL, 'stage.png');
       },
       false
@@ -33,12 +38,16 @@ class TopMenu extends Component {
       <Storage.Consumer>
       {
         store => (
-          <StTopMenuCont>
+          <StTopMenuCont disabled={store.curMode !== ''}>
 
             <IconButton id="backToMain" onClick={store.changeMode}><KeyboardBackspace/></IconButton>
             <div className="mid">
-              <IconButton><Undo/></IconButton>
-              <IconButton><Redo/></IconButton>  
+            <Zoom in={store.historyIdx !== 0}>
+              <IconButton id="undo" onClick={store.changeHistory} disabled={store.curMode !== ''}><Undo/></IconButton>
+            </Zoom>
+            <Zoom in={store.historyIdx !== store.imgHistory.length - 1}>
+              <IconButton id="redo" onClick={store.changeHistory} disabled={store.curMode !== ''}><Redo/></IconButton>  
+            </Zoom>
             </div>
             <IconButton id="save" disabled={store.curMode !== ''}><SaveAlt/></IconButton>
             
@@ -52,8 +61,6 @@ class TopMenu extends Component {
 } export default TopMenu;
 
 const StTopMenuCont = styled.div`
-  /* position: fixed;
-  top: 0; */
   z-index: 100;
 
   display: flex;
@@ -69,11 +76,14 @@ const StTopMenuCont = styled.div`
 
   .mid{
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
   }
 
   svg{
     color: #d9d9d9;
+  }
+  #undo .MuiSvgIcon-root, #redo .MuiSvgIcon-root, #save .MuiSvgIcon-root{
+    color: ${props => props.disabled ? 'black' : '#d9d9d9'};
   }
 `

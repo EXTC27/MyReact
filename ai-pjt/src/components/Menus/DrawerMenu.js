@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import SegmentList from '../Settings/Segment/SegmentList'
 import {Storage} from '../Storage';
-import {IconButton,} from '@material-ui/core'
-import {Clear, Check} from '@material-ui/icons';
+import styled from 'styled-components';
+import {IconButton, Slider, Input} from '@material-ui/core'
+import {Clear, Check, Refresh} from '@material-ui/icons';
 
 
 class DrawerMenu extends Component{
@@ -13,12 +14,34 @@ class DrawerMenu extends Component{
         store => (
           <StDrawerMenuCont>
             <StMenuCont>
-              <IconButton id={store.curMode} onClick={store.applyChange}><Check fontSize="large" /></IconButton>
-              <IconButton id={store.curMode} onClick={store.cancelChange}><Clear fontSize="large"/></IconButton>
+              {
+                store.curMode === 'segment' ? 
+                <>
+                  <IconButton id={store.curMode} onClick={store.applyChange}><Refresh fontSize="large" /></IconButton>
+                  <IconButton id={store.curMode} onClick={store.cancelChange}><Check fontSize="large"/></IconButton>
+                </>
+                :
+                <>
+                  <IconButton id={store.curMode} onClick={store.applyChange}><Check fontSize="large" /></IconButton>
+                  <IconButton id={store.curMode} onClick={store.cancelChange}><Clear fontSize="large"/></IconButton>
+                </>
+              }
+              {/* <IconButton id={store.curMode} onClick={store.applyChange}><Check fontSize="large" /></IconButton>
+              <IconButton id={store.curMode} onClick={store.cancelChange}><Clear fontSize="large"/></IconButton> */}
             </StMenuCont>
 
             <StSettingCont>
-              
+              { store.curMode === 'segment' ? <SegmentList store={store}/> : null }
+              { store.curMode === 'adjust' ?
+              <div style={{'width':'70%'}} >
+                <Slider 
+                  min={0}
+                  step={2}
+                  max={40}
+                  onChange={store.changeFilter}
+                />
+              </div>
+              :null}
             </StSettingCont>
           </StDrawerMenuCont>
         )
@@ -29,6 +52,7 @@ class DrawerMenu extends Component{
 } export default DrawerMenu;
 
 const StDrawerMenuCont = styled.div`
+  font-family: 'Single Day', cursive;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,6 +83,10 @@ const StMenuCont = styled.div`
 const StSettingCont = styled.div`
   box-sizing: border-box;
   /* border: 3px solid gray; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
   width: 100%;
   height: 100%;
 `;

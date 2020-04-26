@@ -1,115 +1,85 @@
 import React, { Component } from "react";
+import { Storage } from './Storage'
 import styled from 'styled-components'
-import {Stage, Layer,} from "react-konva";
+import { Stage, Layer, Image } from "react-konva";
+import Konva from 'konva'
+import { Slide } from '@material-ui/core'
 
 class Canvas extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     img: null,
-  //     imgWidth: 0,
-  //     imgHeight: 0,
-  //     stageWidth: 0,
-  //     stageHeight: 0,
-  //     scale: 0,
-
-  //     selectedId: null,
-  //   };
-  // }
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.props.store.stageInit()
+    // this.props.store.stageInit()
   }
-
-  // componentDidMount(){
-  //   this.setOriginImage()
-  //   this.props.store.stageInit()
-  // }
-
-  // setOriginImage = () => {
-  //   const _img = new window.Image();
-  //   _img.src = this.props.src;
-  //   _img.onload = () => {
-  //     this.setStateAsync({
-  //       img: _img,
-  //       imgWidth: _img.width,
-  //       imgHeight: _img.height,
-  //     })
-  //     .then(()=>{
-  //       const _cont = document.querySelector('#canvas-container')
-
-  //       if(this.state.imgWidth > this.state.imgHeight){
-  //         const _contW = _cont.offsetWidth
-  //         const _scale = _contW / this.state.imgWidth
-
-  //         this.setState({
-  //           stageWidth: _contW,
-  //           stageHeight: _scale * this.state.imgHeight,
-  //           scale: _scale,
-  //         })
-  //       }
-  //       else{
-  //         const _contH = _cont.offsetHeight
-  //         const _scale = _contH / this.state.imgHeight
-
-  //         this.setState({
-  //           stageWidth: _scale * this.state.imgWidth,
-  //           stageHeight: _contH,
-  //           scale: _scale,
-  //         })
-  //       }
-  //     })
-  //     .then(()=>{
-  //       this.props.store.imgInit(this.state.img)
-  //     })
-  //   }
-  // }
-
-  // setStateAsync(state) {
-  //   return new Promise(resolve => {
-  //     this.setState(state, resolve);
-  //   });
-  // }
-
   render() {
+    // const store = this.props.store
     return (
-      <StCanvasCont id="canvas-container">
-        <Stage
-          ref={ref => { this.props.store.stageRef = ref; }}
-          style={{"display":"flex", "backgroundColor":"gray"}}
-          width={this.props.store.stageWidth}
-          height={this.props.store.stageHeight}
-          // scaleX={this.props.store.stageScale}
-          // scaleY={this.props.store.stageScale}
-        >
-          <Layer 
-            id='origin-layer'
-            ref={ref => { this.props.store.layerRef = ref; }}
-            // style={{"display":"flex", "backgroundColor":"gray"}}
-            // width={this.props.store.stageWidth}
-            // height={this.props.store.stageHeight}
-            scaleX={this.props.store.stageScale}
-            scaleY={this.props.store.stageScale}
-          >
-            {this.props.store.imgList}
-          </Layer>
-        </Stage>
-      </StCanvasCont>
-      // {/* <StCanvasCont id="canvas-container">
-      //   <Stage
-      //     style={{"display":"flex", "backgroundColor":"gray"}}
-      //     width={this.state.stageWidth}
-      //     height={this.state.stageHeight}
-      //     scaleX={this.state.scale}
-      //     scaleY={this.state.scale}
-      //   >
-      //     <Layer>
-      //       {this.props.store.imgList}
-      //     </Layer>
-      //   </Stage>
-      // </StCanvasCont> */}
+      <Storage.Consumer>
+        {
+          store => (
+            <StCanvasCont id="canvas-container">
+              <Stage
+                ref={ref => { store.stageRef = ref; }}
+                // ref={ref => { this.props.store.stageRef = ref; }}
+                style={{ "display": "flex", "backgroundColor": "gray" }}
+                width={store.stageHistory[store.historyIdx].width}
+                height={store.stageHistory[store.historyIdx].height}
+                scaleX={store.stageHistory[store.historyIdx].scale}
+                scaleY={store.stageHistory[store.historyIdx].scale}
+              // width={this.props.store.stageWidth}
+              // height={this.props.store.stageHeight}
+              // scaleX={this.props.store.scale}
+              // scaleY={this.props.store.scale}
+              >
+                <Layer
+                  id='display-layer'
+                  // ref={ref => { this.props.store.layerRef = ref; }}
+                  ref={ref => { store.layerRef = ref; }}
+                >
+                  {
+                    store.imgHistory[store.historyIdx]
+                  }
+                </Layer>
+
+                {
+                  store.curMode !== '' ?
+                    <Layer id='edit-layer'>
+                      {
+                        store.curMode === 'adjust' ?
+                          <Image
+                            image={store.img}
+                            filters={[Konva.Filters.Blur]}
+                            blurRadius={store.filterVal}
+                            ref={ref => { store.filterRef = ref; }} />
+                          : null
+                      }
+                    </Layer>
+                    : null
+                }
+
+                {
+                  <Layer id='ai-layer'>
+                    {
+                      store.segCheckList.map((value, i) =>
+                        value ?
+                          store.segList[i]
+                          :
+                          null
+                      )
+                    }
+                    {
+
+                    }
+                  </Layer>
+                }
+              </Stage>
+            </StCanvasCont>
+          )
+        }
+
+      </Storage.Consumer>
     );
   }
+
 } export default Canvas;
 
 const StCanvasCont = styled.div`

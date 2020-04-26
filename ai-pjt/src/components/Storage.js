@@ -1,23 +1,29 @@
 import React from 'react';
 
 export const Storage = React.createContext({});
-// export const Storage = React.createContext(
-//   {
-//     innerW: 0,
-//     innerH: 0,
+export const StorageInit = {
+  imgFile: '',
+  imgURL: '',
+  img: null,
+  imgWidth: 0,
+  imgHeight: 0,
+  imgHistory: [],
 
-//     imgFile: '',
-//     imgURL: '',
-//     imgOrg: null,
-//     imgList: [],
-//     imgUpload: () => {},
-//     imgInit: () => {},
+  allSegList: [],
+  segList: [],
+  segCheckList: [],
+  
+  stageHistory: [
+    {
+      width: 0,
+      height: 0,
+      scale: 0,
+      ratio: 0,
+    }
+  ],      
+  stageIdx: 0,
+  
+  curMode: '',
 
-//     backToMain: () => {},
-
-//     curMode: '',
-//     changeMode: () => {},
-
-//     confirm: () => {},
-//   }
-// );
+  historyIdx: 0,
+}

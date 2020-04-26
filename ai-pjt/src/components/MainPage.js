@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Storage} from "./Storage";
+import MainAnimation from './MainAnimation'
 import { Slide, Zoom, IconButton } from "@material-ui/core";
 import { PhotoLibrary } from "@material-ui/icons";
 import styled from "styled-components";
@@ -23,6 +24,7 @@ class MainPage extends Component {
       {store => (
         <Slide in={true} direction={dir}>
           <StMainCont className="main" width={window.innerWidth} height={window.innerHeight}>
+            <MainAnimation/>
             <Zoom in={true} timeout={400}>
               <StUploadBtn>
                 <input
@@ -49,10 +51,17 @@ class MainPage extends Component {
 
 
 const StMainCont = styled.div`
+  font-family: 'Single Day', cursive;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: mintcream;
+
+  /* background-color: mintcream; */
+  background-image: url('MainBackground.jpg');
+  background-position: center; 
+  background-repeat: no-repeat;
+  background-size: cover;
   width: ${props => props.width}px;
   height: ${props => props.height}px;
 `;
@@ -82,7 +91,8 @@ const StUploadBtn = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #b2dfdb;
+    /* background-color: #b2dfdb; */
+    background: linear-gradient(to bottom, #66ffff 22%, #ff99cc 100%);
     color: #009687;
     font-size: 80%;
     font-weight: 600;
@@ -101,7 +111,10 @@ const StUploadBtn = styled.div`
   }
 
   div {
-    color: #009687;
+    margin-top: 0.2rem;
+    font-size: 120%;
+    color: white;
+    text-shadow: 0 0 10px gray;
   }
 
 `;

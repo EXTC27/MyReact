@@ -13,42 +13,42 @@ class BottomMenu extends Component {
         store => (
           <StBottomMenuCont>
             <StButtonCont id="origin" mode={store.curMode} onClick={store.changeMode}>
-              <Photo/>
+              <Photo fontSize='large'/>
               <label>원본</label>
             </StButtonCont>
 
             <StButtonCont id="crop" mode={store.curMode} onClick={store.changeMode}>
-              <Crop/>
+              <Crop fontSize='large'/>
               <label>자르기</label>
             </StButtonCont>
 
             <StButtonCont id="rotate" mode={store.curMode} onClick={store.changeMode}>
-              <Cached/>
+              <Cached fontSize='large'/>
               <label>회전</label>
             </StButtonCont>
 
             <StButtonCont id="filter" mode={store.curMode} onClick={store.changeMode}>
-              <FlipToFront/>
+              <FlipToFront fontSize='large'/>
               <label>필터</label>
             </StButtonCont>
 
             <StButtonCont id="adjust" mode={store.curMode} onClick={store.changeMode}>
-              <Tune/>
+              <Tune fontSize='large'/>
               <label>조정</label>
             </StButtonCont>
 
-            <StButtonCont id="object" mode={store.curMode} onClick={store.changeMode}>
-              <NaturePeople/>
+            <StButtonCont id="segment" mode={store.curMode} onClick={store.changeMode}>
+              <NaturePeople fontSize='large'/>
               <label>객체찾기</label>
             </StButtonCont>
 
             <StButtonCont id="face" mode={store.curMode} onClick={store.changeMode}>
-              <Face/>
+              <Face fontSize='large'/>
               <label>얼굴인식</label>
             </StButtonCont>
 
             <StButtonCont id="tag" mode={store.curMode} onClick={store.changeMode}>
-              <LocalOffer/>
+              <LocalOffer fontSize='large'/>
               <label>태그생성</label>
             </StButtonCont>
           </StBottomMenuCont>
@@ -64,7 +64,8 @@ const StBottomMenuCont = styled.div`
   display: flex;
   overflow: scroll;
   justify-content: flex-start;
-  background: linear-gradient(to top, #ccffff 0%, #ffffff 100%);
+  /* background: linear-gradient(to top left, #66ffff 0%, #ff9999 100%); */
+  background: linear-gradient(to top left, #66ccff 0%, #ff99cc 100%);
   box-sizing: border-box;  
   border-radius: 8px 8px 0 0;
   width: 100%;
@@ -75,14 +76,16 @@ const StBottomMenuCont = styled.div`
 
 const StButtonCont = styled(IconButton)`
   width: 3em;
-  /* color: ${props => props.mode === props.id ? "gray" : "black"}; */
-  color: black;
+  /* color: #e6e6e6; */
+  color: white;
+  text-shadow: 0 0 10px black;
   .MuiIconButton-label{
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   label{
+    font-family: 'Single Day', cursive;
     padding-top: 2px;
     font-size: 60%;
   }
