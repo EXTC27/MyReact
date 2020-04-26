@@ -15,10 +15,7 @@ class TopMenu extends Component {
         const store = this.props.store
         const _stage = store.stageRef.getStage()
         const _ratio = store.stageHistory[store.historyIdx].ratio
-        // if(_ratio < 1){
-        //   _ratio = 1
-        // }
-        const dataURL = _stage.toDataURL({ pixelRatio: Math.round(_ratio) });
+        const dataURL = _stage.toDataURL({ pixelRatio: _ratio });
         this.downloadURI(dataURL, 'stage.png');
       },
       false

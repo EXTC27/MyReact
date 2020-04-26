@@ -1,5 +1,6 @@
 import Konva from "konva";
 
+
 export const createCropRect = (_stageRef, _initVal) => {
   const stage = _stageRef.getStage();
   const cropLayer = stage.find('#edit-layer')

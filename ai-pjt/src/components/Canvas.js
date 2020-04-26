@@ -6,10 +6,9 @@ import Konva from 'konva'
 import { Slide } from '@material-ui/core'
 
 class Canvas extends Component {
-  constructor(props) {
-    super(props);
-    // this.props.store.stageInit()
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   render() {
     // const store = this.props.store
     return (
@@ -43,15 +42,15 @@ class Canvas extends Component {
                 {
                   store.curMode !== '' ?
                     <Layer id='edit-layer'>
-                      {
+                      {/* {
                         store.curMode === 'adjust' ?
                           <Image
                             image={store.img}
                             filters={[Konva.Filters.Blur]}
-                            blurRadius={store.filterVal}
-                            ref={ref => { store.filterRef = ref; }} />
+                            blurRadius={store.adjustVal}
+                            ref={ref => { store.adjustRef = ref; }} />
                           : null
-                      }
+                      } */}
                     </Layer>
                     : null
                 }

@@ -38,7 +38,7 @@ class DrawerMenu extends Component{
                   min={0}
                   step={2}
                   max={40}
-                  onChange={store.changeFilter}
+                  onChange={store.changeAdjust}
                 />
               </div>
               :null}

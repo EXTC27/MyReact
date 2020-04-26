@@ -8,11 +8,11 @@ import axios from 'axios'
 import {Image, Rect} from "react-konva";
 import Konva from 'konva'
 import { LabelTwoTone, TurnedIn } from '@material-ui/icons';
+import { green } from '@material-ui/core/colors';
 
 class App extends Component{
   constructor(props){
     super(props)
-    
     this.state = {
       innerW: window.innerWidth,
       innerH: window.innerHeight,
@@ -22,10 +22,9 @@ class App extends Component{
       img: null,
       imgWidth: 0,
       imgHeight: 0,
-      // imgList: [],
+
       imgHistory: [],
       imgUpload: this.imgUpload,
-      // imgInit: this.imgInit,
 
       allSegList: [],
       segList: [],
@@ -57,29 +56,10 @@ class App extends Component{
       historyIdx: 0,
       changeHistory: this.changeHistory,
 
-      filterVal: 0,
-      filter: null,
-      filterRef: React.createRef(),
-      changeFilter: this.changeFilter,
-      touchFlag: false,
-      touchStart: this.touchStart,
-      touchEnd: this.touchEnd,
-    }
-  }
-  changeFilter = async (e, value) => {
-    console.log(e.target.value)
-    if(!this.state.touchFlag){
-      await this.setStateAsync({
-        filterVal: value
-      })
-      console.log(value)
-      const stage = this.state.stageRef.getStage();
-      const filterLayer = stage.find('#edit-layer');
-      const filterimg = stage.find('#filter-img')[0];
-      filterimg.cache()
-      filterimg.filters([Konva.Filters.Blur]);
-      filterimg.blurRadius(value);
-      filterLayer.draw()
+      adjustVal: 0,
+      adjust: null,
+      adjustRef: React.createRef(),
+      changeAdjust: this.changeAdjust,
     }
   }
 
@@ -89,7 +69,6 @@ class App extends Component{
       this.setState(state, resolve);
     });
   }
-  ////////////////////////////////
 
   imgUpload = (e) => {
     e.preventDefault();
@@ -116,90 +95,49 @@ class App extends Component{
     return _img
   }
 
+  calcStage = (imgW, imgH) => {
+    const canvW = document.querySelector('#canvas-container').offsetWidth
+    const canvH = document.querySelector('#canvas-container').offsetHeight
+
+    if(imgW >= imgH) {
+      const scale = canvW / imgW
+      const ratio = imgW / canvW
+      return {
+        width: canvW,
+        height: scale * imgH,
+        scale: scale,
+        ratio: ratio
+      }
+    }
+    else {
+      const scale = canvH / imgH
+      const ratio = imgH / canvH
+      return {
+        width: scale * imgW,
+        height: canvH,
+        scale: scale,
+        ratio: ratio
+      }
+    }
+  }
+
   stageInit = () => {
-    // const _img = new window.Image();
-    // _img.src = this.state.imgURL;
     const _img = this.imgUrlToTag(this.state.imgURL)
     _img.onload = () => {
       this.setStateAsync({
         img: _img,
-        imgWidth: _img.width,
-        imgHeight: _img.height,
+        // imgWidth: _img.width,
+        // imgHeight: _img.height,
       })
       .then(()=>{
-        const _cont = document.querySelector('#canvas-container')
-        if(this.state.imgWidth > this.state.imgHeight){
-          const _contW = _cont.offsetWidth
-          const _scale = _contW / this.state.imgWidth
-          const _ratio = this.state.imgWidth / _contW
-          this.setState({
-            stageHistory: [
-              {
-                width: _contW,
-                height: _scale * this.state.imgHeight,
-                scale: _scale,
-                ratio: _ratio,
-              }
-            ]
-          })
-        }
-        else{
-          const _contH = _cont.offsetHeight
-          const _scale = _contH / this.state.imgHeight
-          const _ratio = this.state.imgHeight / _contH
-          this.setState({
-            stageHistory: [
-              {
-                width: _scale * this.state.imgWidth,
-                height: _contH,
-                scale: _scale,
-                ratio: _ratio,
-              }
-            ]
-          })
-        }
-      })
-      .then(()=>{
-        // this.imgInit(this.state.img)
         this.setState({
-          imgHistory: [
-            <Image key={0} image={_img}/>
-          ]
+          stageHistory: [this.calcStage(_img.width, _img.height)]
         })
       })
-    }
-  }
-
-  stageUpdate = (imgWidth, imgHeight) => {
-    const _cont = document.querySelector('#canvas-container')
-    if(imgWidth > imgHeight){
-      const _contW = _cont.offsetWidth
-      const _scale = _contW / imgWidth
-      const _ratio = imgWidth / _contW
-      this.setState({
-        stageHistory: this.state.stageHistory.concat(
-          {
-            width: _contW,
-            height: _scale * imgHeight,
-            scale: _scale,
-            ratio: _ratio,
-          }
-        )
-      })
-    }
-    else{
-      const _contH = _cont.offsetHeight
-      const _scale = _contH / imgHeight
-      const _ratio = imgHeight / _contH
-      this.setState({
-        stageHistory: this.state.stageHistory.concat(
-          {
-            width: _scale * imgWidth,
-            height: _contH,
-            scale: _scale,
-            ratio: _ratio,
-          }
-        )
+      .then(() => {
+        this.setState({
+          imgHistory: [<Image key={0} image={_img}/>]
+        })
       })
     }
   }
@@ -268,79 +206,79 @@ class App extends Component{
       }
 
       else if(_curMode === 'segment'){
-        try{
-          const formData = new FormData();
-          formData.append('file', this.state.imgFile);
+        if(!this.state.allSegList.length > 0){
+          try{
+            const formData = new FormData();
+            formData.append('file', this.state.imgFile);
 
-          await axios({
-            // method: 'post',
-            // url: '',
-            // data: formData,
-            // headers: { 'content-Type': 'multipart/form-data' }
-            method: 'get',
-            url: 'https://picsum.photos/v2/list?page=1&limit=10',
-            responseType: JSON,
-          })
-          .then((res) => {
-            const resData = res.data;
-            // console.log(JSON.stringify(resData, null, 2))
-            this.setStateAsync({
-              segCheckList: resData.map((i) => false)
+            await axios({
+              // method: 'post',
+              // url: '',
+              // data: formData,
+              // headers: { 'content-Type': 'multipart/form-data' }
+              method: 'get',
+              url: 'https://picsum.photos/v2/list?page=1&limit=10',
+              responseType: JSON,
             })
-            .then(() => {
-              this.setState({
-                allSegList: resData.map((_obj, i) => { return(
-                  <div key={_obj.id} style={{'margin':'10px'}}>
-                    <img id={i} src={_obj.download_url} width={80} height={80} alt='' onClick={this.checkSeg}/>
-                  </div>
-                )}),
+            .then((res) => {
+              const resData = res.data;
+              // console.log(JSON.stringify(resData, null, 2))
+              this.setStateAsync({
+                segCheckList: resData.map((i) => false)
               })
+              .then(() => {
+                this.setState({
+                  allSegList: resData.map((_obj, i) => { return(
+                    <div key={_obj.id} style={{'margin':'10px'}}>
+                      <img id={i} src={_obj.download_url} width={80} height={80} alt='' onClick={this.checkSeg}/>
+                    </div>
+                  )}),
+                })
 
-            })
-            .then(
-              this.setState({
-                segList: resData.map((_obj, i) => { 
-                  return(
-                    <Image key={i} image={this.imgUrlToTag(_obj.download_url)} 
-                      x={i*300}
-                      y={i*300}
-                      width={300} 
-                      height={300}
-                    />
-                )})
               })
-            )
-          })
-          // .then((res) => {
-          //   const resData = res.data;
-          //   this.setState({
-          //     allSegList: this.state.allSegList.concat(resData.map((_obj, i) => { return(
-          //       <Image key={i} image={this.imgUrlToTag(_obj)}/>
-          //     )}))
-          //   })
-          // })
+              .then(
+                this.setState({
+                  segList: resData.map((_obj, i) => { 
+                    return(
+                      <Image key={i} image={this.imgUrlToTag(_obj.download_url)} 
+                        x={i*300}
+                        y={i*300}
+                        width={300} 
+                        height={300}
+                      />
+                  )})
+                })
+              )
+            })
+            // .then((res) => {
+            //   const resData = res.data;
+            //   this.setState({
+            //     allSegList: this.state.allSegList.concat(resData.map((_obj, i) => { return(
+            //       <Image key={i} image={this.imgUrlToTag(_obj)}/>
+            //     )}))
+            //   })
+            // })
+          }
+          catch(err){ console.log(err) }
         }
-        catch(err){ console.log(err) }
       }
 
       else if(_curMode === 'adjust'){
-        // this.state.filterRef.cache()
+        // this.state.adjustRef.cache()
+        // const _width = this.state.stageHistory[this.state.historyIdx].width
+        // const _height = this.state.stageHistory[this.state.historyIdx].height
+        // const _ratio = this.state.stageHistory[this.state.historyIdx].ratio
+
         const stage = this.state.stageRef.getStage();
-        const filterLayer = stage.find('#edit-layer');
+        const adjustLayer = stage.find('#edit-layer');
 
-        const img = new Konva.Image({
-          id: 'filter-img',
+        const rect = new Konva.Image({
+          id: 'adjust-rect',
           image: this.state.img,
-          blurRadius: this.state.filterVal,
+          blurRadius: 0,
         })
-        console.log(img)
-        // img.cache();
-        // img.filters([Konva.Filters.Blur]);
-        filterLayer.add(img);
-        // filterLayer.draw();
-        
+        adjustLayer.add(rect);
       }
-
 
       /////////////////////////////////////////////
       
@@ -355,7 +293,6 @@ class App extends Component{
   applyChange = async () => {
     const _curHistIdx = this.state.historyIdx
     if(_curHistIdx < this.state.imgHistory.length - 1){
-      console.log(this.state.stageHistory.slice(0, _curHistIdx + 1))
       await this.setStateAsync({
         stageHistory: this.state.stageHistory.slice(0, _curHistIdx + 1),
         imgHistory: this.state.imgHistory.slice(0, _curHistIdx + 1)
@@ -363,15 +300,13 @@ class App extends Component{
     }
 
     const _stage = this.state.stageRef.getStage()
-    const _layer = this.state.layerRef.getLayer()
+    const _layer = this.state.layerRef.getLayer()    
     const _ratio = this.state.stageHistory[_curHistIdx].ratio
-    const _dataURL = _layer.toDataURL({ pixelRatio: Math.round(_ratio) });
-    // const _img = new window.Image()
-    // _img.src = _dataURL
-
+    const _dataURL = _layer.toDataURL({ pixelRatio: _ratio })
     const _img = this.imgUrlToTag(_dataURL)
 
     if(this.state.curMode === 'crop'){
+
       const cropRect = _stage.find('#crop-rect')[0].attrs
       const cropInfo = {
         x: cropRect.x,
@@ -379,9 +314,8 @@ class App extends Component{
         width: cropRect.width * cropRect.scaleX,
         height: cropRect.height * cropRect.scaleY,
       }
-      // console.log(cropInfo)
-      this.stageUpdate(cropInfo.width, cropInfo.height)
       this.setStateAsync({
+        stageHistory: this.state.stageHistory.concat(this.calcStage(cropInfo.width, cropInfo.height)),
         imgHistory: this.state.imgHistory.concat(
           <Rect 
             key={this.state.historyIdx + 1} 
@@ -401,7 +335,9 @@ class App extends Component{
           curMode:''
         })
       )
+      
     }
+
     else if(this.state.curMode === 'segment'){ //얘는 적용했을 때 새로고침 시킬거임
       this.setState({
 
@@ -443,6 +379,20 @@ class App extends Component{
         }
       })
     })
+  }
+
+  changeAdjust = (e, value) => {
+    // await this.setStateAsync({
+    //   adjustVal: value
+    // })
+    const stage = this.state.stageRef.getStage();
+    const adjLayer = stage.find('#edit-layer');
+    const adjRect = adjLayer.find('#adjust-rect')[0];
+    adjRect.cache()
+    adjRect.filters([Konva.Filters.Blur]);
+    adjRect.blurRadius(value);
+    adjLayer.draw()
+    
   }
 
   render(){
