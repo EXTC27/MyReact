@@ -411,7 +411,7 @@ Tag: Frontend
 
     ![Untitled9.png](readme_img/Untitled9.png)
 
-### setState()
+### ☆setState()
 
 - `state`는 `props`와 다르게 값 변경이 가능하다. 
 **하지만, `state`의 값을 바꿀려면 `setState()` 메서드를 사용해야한다.**
