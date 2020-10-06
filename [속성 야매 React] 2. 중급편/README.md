@@ -66,7 +66,8 @@ Tag: Frontend
         	
         } export default App;
         ```
-    - **2. `render()`**        
+        
+    - **2. `render()`** 
         
         - **화면을 그리는 함수**라고 생각하면 된다.
         - 클래스형 컴포넌트에서 **반드시 구현돼야하는 유일한 메서드**이다. 
@@ -79,7 +80,8 @@ Tag: Frontend
             3. Boolean or Null : 추후 설명하겠다.
             4. String or Number : DOM상의 Text 노드로 렌더링 된다.
             5. Portal : 별도의 DOM 하위 트리에 자식 엘리먼트를 렌더링한다. (거의 써본적 없)
-    ```jsx
+
+        ```jsx
         import React, { Component } from 'react'
         class App extends Component {
             /* 생략 */
@@ -90,8 +92,8 @@ Tag: Frontend
         		)
         	}
         	
-        } export default App;
-    ```
+    } export default App;
+        ```
         
     - **3. `componentDidMount()`**    
         - 컴포넌트가 마운트된 직후, 즉 DOM 트리에 삽입된 직후에 호출된다.
@@ -185,6 +187,8 @@ Tag: Frontend
 
             ![Untitled1.png](readme_img/Untitled1.png)
 
+    
+
 - **Unmounting (컴포넌트 제거) :**
 
     컴포넌트가 제거되는 단계이다. (DOM에서 삭제되는 단계, 화면에서 없어지는 단계)
@@ -211,6 +215,8 @@ Tag: Frontend
 
         } export default App;
         ```
+
+    
 
 - **예제**를 통해서 감을 잡아보자.
 
