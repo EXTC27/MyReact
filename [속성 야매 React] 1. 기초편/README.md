@@ -95,9 +95,12 @@ Tag: Frontend
     ```jsx
     const element1 = <div>이거는</div> <div>에러납니다.</div>
 
-    const element2 = **<div>** 
-    									<div>무조건</div> <div>하나의 태그로</div> <div>묶여야합니다.</div> 
-    								 **</div>**
+    const element2 = 
+          <div>
+              <div>무조건</div>
+              <div>하나의 태그로</div>
+              <div>묶여야합니다.</div> 
+          </div>
     ```
 
 <br/>

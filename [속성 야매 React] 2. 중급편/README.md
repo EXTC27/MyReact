@@ -100,12 +100,12 @@ Tag: Frontend
            class App extends Component {
                /* 생략 */
            
-           	render(){
-           		return(
-           			<div>반드시 구현해야 합니다.</div>
-           		)
-           	}
-           	
+               render(){
+                   return(
+                       <div>반드시 구현해야 합니다.</div>
+                   )
+               }
+           
            } export default App;
            ```
 
@@ -133,22 +133,22 @@ Tag: Frontend
             
             class App extends Component {
             
-            	/* 생략 */
+                /* 생략 */
             
-            	componentDidMount(){
-            		
-            		// 마운트된 DOM의 정보를 가져올 때
-            		const rootWidth = document.getElementById('root').offsetWidth
-            		
-        		// 이벤트 리스너를 추가할 때
-            		window.addEventListener('resize', 
+                componentDidMount(){
+            
+                    // 마운트된 DOM의 정보를 가져올 때
+                    const rootWidth = document.getElementById('root').offsetWidth
+            
+                // 이벤트 리스너를 추가할 때
+                    window.addEventListener('resize', 
                                         () => {this.setState({ windowWidth: window.innerWidth })})
-            		
-            		// setState() 사용할 때, setTimeout()등 타이머를 설정할 때,
-            		// AJAX 요청할 때 등등 사용하기 좋은 위치이다.
-            	}
             
-              /* 생략 */
+                    // setState() 사용할 때, setTimeout()등 타이머를 설정할 때,
+                    // AJAX 요청할 때 등등 사용하기 좋은 위치이다.
+                }
+            
+                /* 생략 */
             
             } export default App;
             ```
@@ -231,16 +231,14 @@ Tag: Frontend
           
       class App extends Component {
           
-      	/* 생략 */
+          /* 생략 */
           
-          	componentWillUnmount(){
+              componentWillUnmount(){ // 이벤트 리스너를 해제할 때
+                  window.removeEventListener('resize', /*생략*/ )
           
-          		// 이벤트 리스너를 해제할 때
-      		window.removeEventListener('resize', /*생략*/ )
-          													
-      	}
+          }
           
-            /* 생략 */
+          /* 생략 */
           
           } export default App;
           ```
@@ -967,19 +965,25 @@ upCount(){
     >          { 
     >            // 여기서부터 조건부 렌더링, 조건식에 따라 렌더링을 한다.
     >            this.state.curMenu === 'menu1' ? 
-    >  					<div className='board1'><div className="msg">Board 1</div></div>
+    >  					<div className='board1'>
+    >                	    <div className="msg">Board 1</div>
+    >                	</div>
     >  					:
     >  					null
     >          }
     >          {
     >            this.state.curMenu === 'menu2' ? 
-    >  					<div className='board2'><div className="msg">Board 2</div></div>
+    >  					<div className='board2'>
+    >                    	<div className="msg">Board 2</div>
+    >                	</div>
     >  					:
     >  					null
     >          }
     >          {
     >            this.state.curMenu === 'menu3' ?
-    >  					<div className='board3'><div className="msg">Board 3</div></div>
+    >  					<div className='board3'>
+    >                    	<div className="msg">Board 3</div>
+    >                	</div>
     >  					:
     >  					null
     >          }
