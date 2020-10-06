@@ -22,9 +22,7 @@ Tag: Frontend
 
 ### i) 생명주기 메서드 (Life Cycle API)
 
-- **클래스형 컴포넌트**라면 기본적으로 제공되는 메서드들이다. 
-
-  함수형 컴포넌트에는 이 친구들이 없다.
+- **클래스형 컴포넌트**라면 기본적으로 제공되는 메서드들이다. 함수형 컴포넌트에는 이 친구들이 없다.
 
 - 생명주기의 각 단계에 따라 **자동적, 순차적**으로 작동된다.
 
@@ -42,95 +40,120 @@ Tag: Frontend
     - **1. `constructor()`**
       
         - 컴포넌트 **생성자 메서드**이다. 마운트되기 전에 호출된다.
+        
         - 컴포넌트가 **생성될 때 단 한번 실행**된다.
+        
         - 이 메서드에서만 **state 초기화**와 **메서드 바인딩**이 가능하다.
+            
             - `this.state`에 객체를 할당하여 **state**를 초기화
+        
         - 메서드를 바인딩하거나 **state**를 초기화하는 작업이 없다면, 생성자를 구현하지 않아도 된다.
-        - 생성자를 구현할 때에는 다른 구문에 앞서 `super(props)`를 호출해야 한다. 그렇지 않으면 `this.props`가 생성자 내에서 정의되지 않아 버그로 이어질 수 있다.
-        - **주의 할점!!!** **state**에 **props**를 복사하지 말자. **불필요한 작업**이며 **버그를 발생**시킨다.
-
-        ```jsx
-        import React, { Component } from 'react'
-
-        class App extends Component {
-
-        	constructor(props){
-            super(props)
-        		//this.state = { color: this.props.color }  
-                // state에 props를 복사하지말자!
-            this.state = { msg: 'Hello, React' }   // this.state를 통한 state 초기화
-                this.handler = this.handler.bind(this) // 메서드 바인딩
-          }
-        	
-        	/* 생략 */
-        	
-        } export default App;
-        ```
+        
+    - 생성자를 구현할 때에는 다른 구문에 앞서 `super(props)`를 호출해야 한다. 그렇지 않으면 `this.props`가 생성자 내에서 정의되지 않아 버그로 이어질 수 있다.
+        
+    - **주의 할점!!!** **state**에 **props**를 복사하지 말자. **불필요한 작업**이며 **버그를 발생**시킨다.
+        
+        - **예제**
+        
+            ```jsx
+            import React, { Component } from 'react'
+            
+            class App extends Component {
+            
+            	constructor(props){
+                super(props)
+            		//this.state = { color: this.props.color }  
+                    // state에 props를 복사하지말자!
+                this.state = { msg: 'Hello, React' }   // this.state를 통한 state 초기화
+                    this.handler = this.handler.bind(this) // 메서드 바인딩
+              }
+            	
+            	/* 생략 */
+            	
+            } export default App;
+            ```
+        
+        
         
     - **2. `render()`** 
-      
-        - **화면을 그리는 함수**라고 생각하면 된다.
-        - 클래스형 컴포넌트에서 **반드시 구현돼야하는 유일한 메서드**이다. 
-        **이 메서드가 컴포넌트에 없으면 바로 에러**뜬다.
-        - 최종적으로 컴포넌트에서 작업한 결과물을 `return`하는 메서드이다.
-        따라서 **`return` 구문 이 없으면 바로 에러, `return` 하는게 없어도 에러**
-        - `return` 되어야하는 것들은 다음과 같다
-            1. React Element : 보통 JSX를 쓴다.
-            2. 배열과 Fragments : 추후 설명하겠다.
-            3. Boolean or Null : 추후 설명하겠다.
-            4. String or Number : DOM상의 Text 노드로 렌더링 된다.
-            5. Portal : 별도의 DOM 하위 트리에 자식 엘리먼트를 렌더링한다. (거의 써본적 없)
 
-        ```jsx
-        import React, { Component } from 'react'
-        class App extends Component {
-            /* 생략 */
-        
-        	render(){
-        		return(
-        			<div>반드시 구현해야 합니다.</div>
-        		)
-        	}
-        	
-       } export default App;
-       ```
+       - **화면을 그리는 함수**라고 생각하면 된다.
+
+       - 클래스형 컴포넌트에서 **반드시 구현돼야하는 유일한 메서드**이다. 
+         **이 메서드가 컴포넌트에 없으면 바로 에러**뜬다.
+
+       - 최종적으로 컴포넌트에서 작업한 결과물을 `return`하는 메서드이다.
+         따라서 **`return` 구문 이 없으면 바로 에러, `return` 하는게 없어도 에러**
+
+       - `return` 되어야하는 것들은 다음과 같다
+
+           >1. React Element : 보통 JSX를 쓴다.
+           >2. 배열과 Fragments : 추후 설명하겠다.
+           >3. Boolean or Null : 추후 설명하겠다.
+           >4. String or Number : DOM상의 Text 노드로 렌더링 된다.
+           >5. Portal : 별도의 DOM 하위 트리에 자식 엘리먼트를 렌더링한다. (거의 써본적 없)
+
+       - **예제**
+
+           ```jsx
+           import React, { Component } from 'react'
+           class App extends Component {
+               /* 생략 */
+           
+           	render(){
+           		return(
+           			<div>반드시 구현해야 합니다.</div>
+           		)
+           	}
+           	
+           } export default App;
+           ```
+
        
+
     - **3. `componentDidMount()`**    
+        
         - 컴포넌트가 마운트된 직후, 즉 DOM 트리에 삽입된 직후에 호출된다.
+        
         - 다음과 같은 경우에 주로 활용된다.
-            1. DOM 노드를 확인하고 초기화해야 하는 작업이 있는 경우
-            ex) 모달처럼 DOM에 마운트되고 크기나 위치를 확인한 다음 작업을 진행하는 경우
-            2. 외부의 데이터를 불러오거나 네트워크 요청을 보내야하는 경우
-            3. 타이머 설정
+            
+            >1. DOM 노드를 확인하고 초기화해야 하는 작업이 있는 경우
+            >   ex) 모달처럼 DOM에 마운트되고 크기나 위치를 확인한 다음 작업을 진행하는 경우
+            >2. 외부의 데이터를 불러오거나 네트워크 요청을 보내야하는 경우
+        >3. 타이머 설정
+            
         - `setState()` 메서드가 많이 사용되는 위치이다.
+
         - `addEventListener()` 메서드를 설정하기 좋은 위치이다.
 
-        ```jsx
-        import React, { Component } from 'react'
+        - **예제**
 
-        class App extends Component {
-
-        	/* 생략 */
-
-        	componentDidMount(){
-        		
-        		// 마운트된 DOM의 정보를 가져올 때
-        		const rootWidth = document.getElementById('root').offsetWidth
-        		
+            ```jsx
+            import React, { Component } from 'react'
+            
+            class App extends Component {
+            
+            	/* 생략 */
+            
+            	componentDidMount(){
+            		
+            		// 마운트된 DOM의 정보를 가져올 때
+            		const rootWidth = document.getElementById('root').offsetWidth
+            		
         		// 이벤트 리스너를 추가할 때
-        		window.addEventListener('resize', 
+            		window.addEventListener('resize', 
                                         () => {this.setState({ windowWidth: window.innerWidth })})
-        		
-        		// setState() 사용할 때, setTimeout()등 타이머를 설정할 때,
-        		// AJAX 요청할 때 등등 사용하기 좋은 위치이다.
-        	}
+            		
+            		// setState() 사용할 때, setTimeout()등 타이머를 설정할 때,
+            		// AJAX 요청할 때 등등 사용하기 좋은 위치이다.
+            	}
+            
+              /* 생략 */
+            
+            } export default App;
+            ```
 
-          /* 생략 */
-
-        } export default App;
-        ```
-        
-        
+    
 
 - **Updating (컴포넌트 업뎃) :**
 
@@ -143,42 +166,45 @@ Tag: Frontend
         - `render()` 메서드에 대한 자세한 설명은 위에서 했으니 넘어간다.
     - **2. `componentDidUpdate()`**
         - 업데이트가 시작해서 렌더링이 끝나면 바로 호출된다.
+
         - 최초 렌더링, 즉 **마운트 단계에서는 호출되지 않는다.**
+
         - 기본적으로 `prevProps`, `prevState`, `snapshot` 이라는 파라미터를 받을 수 있다. 
-        사용 안할거면 굳이 괄호안에 명시안해도 된다.
-            - `prevProps`
+          사용 안할거면 굳이 괄호안에 명시안해도 된다.
 
-                업뎃 되기 전 **props**를 인자로 받을 수 있다. 
-                이전 props와의 변경사항을 확인 한 후, 추가적인 액션을 설정하는 것에 유용하다.
-
-                ```jsx
-                componentDidUpdate(prevProps){
-                	if(this.props.name !== prevProps.name){
-                		this.setState({
-                			/* 생략 */
-                		})
-                	}
-                }
-                ```
-
-            - `prevState`
-
-                `prevProps` 와 비슷하다. 업뎃 되기 전 **state**를 인자로 받을 수 있다.
-                이전 **state**와 비교하여 실행여부를 확인할 때 주로 사용된다.
-
-                ```jsx
-                componentDidUpdate(prevProps, prevState){ //prevProps를 사용 안하더라도 무조건 2번때 파라미터에 넣어줘야한다.
-                	if(this.state.name !== prevState.name){
-                		this.setState({
-                			/* 생략 */
-                		})
-                	}
-                }
-                ```
-
-            - `snapshot`
-
-                생명주기 메서드 중 `getSnapshotBeforeUpdate()` 메서드를 사용했다면 세번째 인자로 `snapshot`을 받을 수 있다. **많이 안쓴다. 나도 안쓴다. 그냥 쓰지말자** 
+          >  - `prevProps`
+          >
+          >    업뎃 되기 전 **props**를 인자로 받을 수 있다. 
+          >    이전 props와의 변경사항을 확인 한 후, 추가적인 액션을 설정하는 것에 유용하다.
+          >
+          >    ```jsx
+          >    componentDidUpdate(prevProps){
+          >    	if(this.props.name !== prevProps.name){
+          >    		this.setState({
+          >    			/* 생략 */
+          >    		})
+          >    	}
+          >    }
+          >    ```
+          >
+          >  - `prevState`
+          >
+          >    `prevProps` 와 비슷하다. 업뎃 되기 전 **state**를 인자로 받을 수 있다.
+          >    이전 **state**와 비교하여 실행여부를 확인할 때 주로 사용된다.
+          >
+          >    ```jsx
+          >    componentDidUpdate(prevProps, prevState){ //prevProps를 사용 안하더라도 무조건 2번때 파라미터에 넣어줘야한다.
+          >    	if(this.state.name !== prevState.name){
+          >    		this.setState({
+          >    			/* 생략 */
+          >    		})
+          >    	}
+          >    }
+          >    ```
+          >
+          >  - `snapshot`
+          >
+          >    생명주기 메서드 중 `getSnapshotBeforeUpdate()` 메서드를 사용했다면 세번째 인자로 `snapshot`을 받을 수 있다. **많이 안쓴다. 나도 안쓴다. 그냥 쓰지말자**
 
         - **주의 할점!!!!** `componentDidUpdate()` 메서드 안에 `setState()`를
         **그냥 쌩으로 사용하면 무한루프에 빠진다.
@@ -195,30 +221,33 @@ Tag: Frontend
 
     - **1. `componentWillUnmount()`**
         - 컴포넌트가 제거되기 직전에 호출된다.
-        - `componentDidMount()`에서 추가한 이벤트 리스너나 타이머를 해제할 때, 네트워크 요청을 취소할 때 활용된다.
+        
+    - `componentDidMount()`에서 추가한 이벤트 리스너나 타이머를 해제할 때, 네트워크 요청을 취소할 때 활용된다.
+        
+        - **예제**
 
-        ```jsx
-        import React, { Component } from 'react'
-
-        class App extends Component {
-
-        	/* 생략 */
-
-        	componentWillUnmount(){
-
-        		// 이벤트 리스너를 해제할 때
-        		window.removeEventListener('resize', /*생략*/ )
-        													
-        	}
-
-          /* 생략 */
-
-        } export default App;
-        ```
+          ```jsx
+      import React, { Component } from 'react'
+          
+      class App extends Component {
+          
+      	/* 생략 */
+          
+          	componentWillUnmount(){
+          
+          		// 이벤트 리스너를 해제할 때
+      		window.removeEventListener('resize', /*생략*/ )
+          													
+      	}
+          
+            /* 생략 */
+          
+          } export default App;
+          ```
 
     
 
-- **예제** (한번 감을 잡아보자.)
+- **전체 생명주기 예제** (한번 감을 잡아보자.)
 
     생명주기 메서드에 `console.log()` 찍고 확인해 보자.
 
@@ -323,11 +352,15 @@ Tag: Frontend
   ```
 
 - 그렇다면 어떤 ***생명주기 메서드*** 안에서 쓸 수 있는가??
-    - **(Ｘ)** `constructor()` : **state**를 초기화하기 때문에 `setState()`를 **사용할 필요가 없다.**
-    - **(Ｘ)** `render()` : 여기서는 `setState()`를 쓰면 **무한루프에 빠진다.** 화면이 그려지는 동적인 상태이기 때문이다.
-    - **(O)** `componentDidMount()` : `setState()` **사용이 가능한 공간**이다. 사용하는 경우는 위에 설명을 참고.
-    - **(△)** `componentDidUpdate()` : 위에서도 설명했듯, **조건문으로 이전 props 혹은 state을 비교하고 사용해야한다.** 안그러면 **무한루프.**
-    - (**Ｘ**) `componentWillUnmount()` : 어차피 없어지는 컴포넌트라 `setState()`를 **사용할 이유가 없다.** 쓴다고해서 문제될건 없는데... 그냥 못 쓴다고 생각하자.
+
+    - 사용 가능
+        - `componentDidMount()` : `setState()` **사용이 가능한 공간**이다. 사용하는 경우는 위에 설명을 참고.
+        - `componentDidUpdate()` : 위에서도 설명했듯, **조건문으로 이전 props 혹은 state을 비교하고 사용해야한다.** 안그러면 **무한루프.**
+    - 사용 불가능
+        - `render()` : 여기서는 `setState()`를 쓰면 **무한루프에 빠진다.** 화면이 그려지는 동적인 상태이기 때문이다.
+    - 그 외
+        - `constructor()` :  **state**를 초기화하기 때문에 `setState()`를 **사용할 필요가 없다.**
+        - `componentWillUnmount()` : 어차피 없어지는 컴포넌트라 `setState()`를 **사용할 이유가 없다.** 쓴다고해서 문제될건 없는데... 그냥 못 쓴다고 생각하자.
 
 
 
@@ -437,26 +470,26 @@ Tag: Frontend
 
     - 1. 마운트
 
-        하위 컴포넌트의 마운트가 끝나면 상위 컴포넌트의 마운트가 완료된다.
+      하위 컴포넌트의 마운트가 끝나면 상위 컴포넌트의 마운트가 완료된다.
 
       ![Untitled5.png](readme_img/Untitled5.png)
 
     - 2. 하위 컴포넌트에서 **state**를 변경했을 때
 
-        하위 컴포넌트의 버튼을 클릭해서 **state**를 바꿔보자.
+      하위 컴포넌트의 버튼을 클릭해서 **state**를 바꿔보자.
 
       ![Untitled6.png](readme_img/Untitled6.png)
 
     - 3. 상위 컴포넌트에서 **props**를 갱신했을 때
 
-        상위 컴포넌트의 버튼을 클릭해서 **props**를 갱신해보자
+      상위 컴포넌트의 버튼을 클릭해서 **props**를 갱신해보자
 
       ![Untitled7.png](readme_img/Untitled7.png)
 
-        사실 그림상에서 상위 컴포넌트의 업데이트가 발생하는 이유는...
+      사실 그림상에서 상위 컴포넌트의 업데이트가 발생하는 이유는...
 
-        하위 컴포넌트에게 넘겨줄 **props**를 갱신하기위해 
-        상위 컴포넌트의 **state**를 변경해서 발생하는 업데이트이다.
+      하위 컴포넌트에게 넘겨줄 **props**를 갱신하기위해 
+      상위 컴포넌트의 **state**를 변경해서 발생하는 업데이트이다.
 
     - 4. 상위 컴포넌트에서 **state**를 변경했을 때 ★
 
@@ -578,10 +611,9 @@ upCount(){
       }
     ```
     
-    그렇기 때문에 에러 메세지도 다음과 같이 뜨는거다. 
-    ('`this` 안에는 `setState`가 없습니다~~ 뭔지 모르겠어요~~')
-
-    ![Untitled10.png](readme_img/Untitled10.png)
+    그렇기 때문에 에러 메세지도 다음과 같이 뜨는거다. ('`this` 안에는 `setState`가 없습니다~~ 뭔지 모르겠어요~~')
+    
+![Untitled10.png](readme_img/Untitled10.png)
     
 
 따라서 **메서드 바인딩**을 통해 이벤트 콜백안의 `this`가 **컴포넌트를 가리키도록** 만들어야한다!!
@@ -681,7 +713,11 @@ upCount(){
   } export default App;
   ```
 
+<br/>
+
 ---
+
+<br/>
 
 ## 3) 이벤트 처리
 
@@ -833,70 +869,70 @@ upCount(){
     } export default App;
     ```
 
-    - CSS 코드
+    ```css
+/*CSS 코드*/
+    
+    .app {
+      width: 500px;
+      height: 500px;
+      border: 10px solid black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-        ```css
-        .app {
-          width: 500px;
-          height: 500px;
-          border: 10px solid black;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
+    .menu-container{
+      width: 100%;
+      /* border: 5px solid gray; */
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-around;
+    }
+    .menu-container *{
+      padding: 5px 10px;
+      margin: 5px 10px;
+      border: 1px solid black;
+      color: white;
+      cursor: pointer;
+    }
+    .menu-container :nth-child(1){
+      background-color: darkgreen;
+    }
+    .menu-container :nth-child(2){
+      background-color: maroon;
+    }
+    .menu-container :nth-child(3){
+      background-color: darkslateblue;
+    }
 
-        .menu-container{
-          width: 100%;
-          /* border: 5px solid gray; */
-          box-sizing: border-box;
-          display: flex;
-          justify-content: space-around;
-        }
-        .menu-container *{
-          padding: 5px 10px;
-          margin: 5px 10px;
-          border: 1px solid black;
-          color: white;
-          cursor: pointer;
-        }
-        .menu-container :nth-child(1){
-          background-color: darkgreen;
-        }
-        .menu-container :nth-child(2){
-          background-color: maroon;
-        }
-        .menu-container :nth-child(3){
-          background-color: darkslateblue;
-        }
-
-        .board-container{
-          width: 90%;
-          height: 80%;
-          /* border: 3px solid black; */
-          /* box-sizing: border-box; */
-          display: flex;
-        }
-        .board-container *{
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-align: center;
-          font-size: 200%;
-          color: white;
-        }
-        .board-container .board1{
-          background-color: darkgreen;
-        }
-        .board-container .board2{
-          background-color: maroon;
-        }
-        .board-container .board3{
-          background-color: darkslateblue;
-        }
-        ```
+    .board-container{
+      width: 90%;
+      height: 80%;
+      /* border: 3px solid black; */
+      /* box-sizing: border-box; */
+      display: flex;
+    }
+    .board-container *{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 200%;
+      color: white;
+    }
+    .board-container .board1{
+      background-color: darkgreen;
+    }
+    .board-container .board2{
+      background-color: maroon;
+    }
+    .board-container .board3{
+      background-color: darkslateblue;
+    }
+    ```
 
     결과 화면을 보면 다음과 같다.
 
@@ -904,180 +940,201 @@ upCount(){
 
     ~~10분만에 만든거라 CSS 저퀄 ㅈㅅ....~~
 
-- 조건식에 따라 렌더링을 하는데, **주의 해야할 점은 JSX 구문안에서 조건부 렌더링을 할려면 조건식에 무조건 return 값이 있어야한다.**
+- 조건식에 따라 렌더링을 하는데, **주의 해야할 점은 JSX 구문안에서 조건부 렌더링을 할려면 조건식에 무조건 return 값이 있어야한다.** 따라서 **JSX 구문안에는 `&& 연산자`와 `삼항 연산자`를 쓰는 것을 추천**한다.
 
-따라서 **JSX 구문안에는 `&& 연산자`와 `삼항 연산자`를 쓰는 것을 추천**한다.
+    ```jsx
+        // && 연산자
+        조건식 && <div>조건식이 true면 리턴됩니다.</div>
+      
+      // 삼항 연산자
+        조건식 ? <div>조건식이 true면 리턴됩니다.</div> : <div>조건식이 false면 리턴됩니다.</div>
+    ```
 
-  ```jsx
-    // && 연산자
-    조건식 && <div>조건식이 true면 리턴됩니다.</div>
-  
-  // 삼항 연산자
-    조건식 ? <div>조건식이 true면 리턴됩니다.</div> : <div>조건식이 false면 리턴됩니다.</div>
-  ```
+    >위의 메뉴탭 예제를 삼항 연산자로 바꾸면?
+    >
+    >```jsx
+    >/* 생략 */
+    >  
+    >render(){
+    >      return(
+    >        <div className='app'>
+    >          <div className='menu-container'>
+    >            <div className='menu1' onClick={this.changeTab}>Menu1</div>
+    >            <div className='menu2' onClick={this.changeTab}>Menu2</div>
+    >            <div className='menu3' onClick={this.changeTab}>Menu3</div>
+    >          </div>
+    >          <div className='board-container'>
+    >          { 
+    >            // 여기서부터 조건부 렌더링, 조건식에 따라 렌더링을 한다.
+    >            this.state.curMenu === 'menu1' ? 
+    >  					<div className='board1'><div className="msg">Board 1</div></div>
+    >  					:
+    >  					null
+    >          }
+    >          {
+    >            this.state.curMenu === 'menu2' ? 
+    >  					<div className='board2'><div className="msg">Board 2</div></div>
+    >  					:
+    >  					null
+    >          }
+    >          {
+    >            this.state.curMenu === 'menu3' ?
+    >  					<div className='board3'><div className="msg">Board 3</div></div>
+    >  					:
+    >  					null
+    >          }
+    >          </div>
+    >        </div>
+    >      )
+    >    }
+    >  
+    >/* 생략 */
+    >```
+    >
+    >
 
-  - **위의 메뉴탭 예제를 삼항 연산자로 바꾸면?**
-  
-      ```jsx
-        /* 생략 */
-        
-      render(){
-            return(
-              <div className='app'>
-                <div className='menu-container'>
-                  <div className='menu1' onClick={this.changeTab}>Menu1</div>
-                  <div className='menu2' onClick={this.changeTab}>Menu2</div>
-                  <div className='menu3' onClick={this.changeTab}>Menu3</div>
-                </div>
-                <div className='board-container'>
-                { 
-                  // 여기서부터 조건부 렌더링, 조건식에 따라 렌더링을 한다.
-                  this.state.curMenu === 'menu1' ? 
-        					<div className='board1'><div className="msg">Board 1</div></div>
-        					:
-        					null
-                }
-                {
-                  this.state.curMenu === 'menu2' ? 
-        					<div className='board2'><div className="msg">Board 2</div></div>
-        					:
-        					null
-                }
-                {
-                  this.state.curMenu === 'menu3' ?
-        					<div className='board3'><div className="msg">Board 3</div></div>
-        					:
-        					null
-                }
-                </div>
-              </div>
-            )
-          }
-        
-      /* 생략 */
-      ```
-  
-- `if else`를 쓰면 안되나요??
+    
+
+- **`if else`를 쓰면 안되나요??**
 
     `if else`는 우리가 설정해주지 않는 이상 기본적으로 return되는게 없기 때문에 **JSX 구문안에서는 사용할 수 없다.**
     
     `if else`를 이용해서 조건부 렌더링을 할려면 다른 방식으로 접근해야한다.
     
+    1. 메서드에서 리턴을 시킨다.
     
-
-1. 메서드에서 리턴을 시킨다.
-
-    - 예시 코드
-
-        위의 메뉴탭 예제를 바꿔보겠다.
-        
-        ```jsx
-            import React, { Component } from 'react';
-            import './App.css'
-        
-        class App extends Component{
-              constructor(props){
-                super(props)
-                this.state = {
-                  curMenu: 'menu1'
-                }
-              }
-        
-          changeTab = (event) => { // 이벤트 콜백을 통해 state를 바꾼다.
-                console.log(event.currentTarget.className)
-                this.setState({
-                  curMenu: event.currentTarget.className
-                })
-              }
-        
-        	// if, else 문을 사용한 경우. 메서드에서 엘리먼트나 컴포넌트를 리턴한다.
-            	// 이 메서드가 하나의 경우라도 리턴하는게 없으면 에러뜬다.
-            	renderBoard = () => {
-                if(this.state.curMenu === 'menu1'){
-                  return <div className='board1'><div className="msg">Board 1</div></div>
-                }
-                else if(this.state.curMenu === 'menu2'){
-                  return <div className='board2'><div className="msg">Board 2</div></div>
-                }
-                else {
-                  return <div className='board3'><div className="msg">Board 3</div></div>
-                }
-              }
-        
-          render(){
-                return(
-                  <div className='app'>
-                    <div className='menu-container'>
-                      <div className='menu1' onClick={this.changeTab}>Menu1</div>
-                      <div className='menu2' onClick={this.changeTab}>Menu2</div>
-                      <div className='menu3' onClick={this.changeTab}>Menu3</div>
-                    </div>
-                    <div className='board-container'>
-                    {
-                      this.renderBoard() // 이렇게 컴포넌트, 엘리먼트가 리턴되는 메서드를 선언한다.
-                    }
-                    </div>
-                  </div>
-                )
-              }
-            } export default App;
-            ```
-
-2. `render()` 메서드 안에서 변수로 저장해서 쓴다.
-
-    - 예시 코드
-
-        위의 메뉴탭 예제를 바꿔보겠다.
-        
-        ```jsx
-            import React, { Component } from 'react';
-            import './App.css'
-        
-        class App extends Component{
-              constructor(props){
-                super(props)
-                this.state = {
-                  curMenu: 'menu1'
-                }
-              }
-        
-          changeTab = (event) => { // 이벤트 콜백을 통해 state를 바꾼다.
-                console.log(event.currentTarget.className)
-                this.setState({
-                  curMenu: event.currentTarget.className
-                })
-              }
-        
-          render(){
-            		// 이렇게 render() 메서드안에 컴포넌트나 엘리먼트를 변수에 저장한다.
-                let renderBoard
-                if(this.state.curMenu === 'menu1'){
-                  renderBoard = <div className='board1'><div className="msg">Board 1</div></div>
-                }
-                else if(this.state.curMenu === 'menu2'){
-                  renderBoard = <div className='board2'><div className="msg">Board 2</div></div>
-                }
-                else {
-                  renderBoard = <div className='board3'><div className="msg">Board 3</div></div>
-                }
-        
-            return(
-                  <div className='app'>
-                    <div className='menu-container'>
-                      <div className='menu1' onClick={this.changeTab}>Menu1</div>
-                      <div className='menu2' onClick={this.changeTab}>Menu2</div>
-                      <div className='menu3' onClick={this.changeTab}>Menu3</div>
-                    </div>
-                    <div className='board-container'>
-                    {
-                      renderBoard // 이렇게 컴포넌트나 엘리먼트가 저장된 변수를 선언한다.
-                    }
-                    </div>
-                  </div>
-                )
-              }
-            } export default App;
-            ```
+       - 예시 코드
+    
+         ```jsx
+         //위의 메뉴탭 예제를 바꿔보겠다.
+         import React, { Component } from 'react';
+         import './App.css'
+         
+         class App extends Component{
+         
+             constructor(props){
+                 super(props)
+                 this.state = {
+                     curMenu: 'menu1'
+                 }
+             }
+         
+             changeTab = (event) => { // 이벤트 콜백을 통해 state를 바꾼다.
+                 console.log(event.currentTarget.className)
+                 this.setState({
+                     curMenu: event.currentTarget.className
+                 })
+             }
+         
+             // if, else 문을 사용한 경우. 메서드에서 엘리먼트나 컴포넌트를 리턴한다.
+             // 이 메서드가 하나의 경우라도 리턴하는게 없으면 에러뜬다.
+             renderBoard = () => {
+                 if(this.state.curMenu === 'menu1'){
+                     return 
+                     <div className='board1'>
+                         <div className="msg">Board 1</div>
+                     </div>
+                 }
+                 else if(this.state.curMenu === 'menu2'){
+                     return 
+                     <div className='board2'>
+                         <div className="msg">Board 2</div>
+                     </div>
+                 }
+                 else {
+                     return 
+                     <div className='board3'>
+                         <div className="msg">Board 3</div>
+                     </div>
+                 }
+             }
+         
+             render(){
+                 return(
+                     <div className='app'>
+                         <div className='menu-container'>
+                             <div className='menu1' onClick={this.changeTab}>Menu1</div>
+                             <div className='menu2' onClick={this.changeTab}>Menu2</div>
+                             <div className='menu3' onClick={this.changeTab}>Menu3</div>
+                         </div>
+                         <div className='board-container'>
+                             {
+                                 this.renderBoard() // 이렇게 컴포넌트, 엘리먼트가 리턴되는 메서드를 선언한다.
+                             }
+                         </div>
+                     </div>
+                 )
+             }
+         } export default App;
+         ```
+    
+       
+    
+    2. `render()` 메서드 안에서 변수로 저장해서 쓴다.
+    
+       - 예시 코드
+    
+         ```jsx
+         //위의 메뉴탭 예제를 바꿔보겠다.
+         import React, { Component } from 'react';
+         import './App.css'
+         
+         class App extends Component{
+             constructor(props){
+                 super(props)
+                 this.state = {
+                     curMenu: 'menu1'
+                 }
+             }
+         
+             changeTab = (event) => { // 이벤트 콜백을 통해 state를 바꾼다.
+                 console.log(event.currentTarget.className)
+                 this.setState({
+                     curMenu: event.currentTarget.className
+                 })
+             }
+         
+             render(){
+                 // 이렇게 render() 메서드안에 컴포넌트나 엘리먼트를 변수에 저장한다.
+                 let renderBoard
+                 if(this.state.curMenu === 'menu1'){
+                     renderBoard = 
+                         <div className='board1'>
+                             <div className="msg">Board 1</div>
+                         </div>
+                 }
+                 else if(this.state.curMenu === 'menu2'){
+                     renderBoard = 
+                         <div className='board2'>
+                             <div className="msg">Board 2</div>
+                         </div>
+                 }
+                 else {
+                     renderBoard = 
+                         <div className='board3'>
+                             <div className="msg">Board 3</div>
+                         </div>
+                 }
+         
+                 return(
+                     <div className='app'>
+                         <div className='menu-container'>
+                             <div className='menu1' onClick={this.changeTab}>Menu1</div>
+                             <div className='menu2' onClick={this.changeTab}>Menu2</div>
+                             <div className='menu3' onClick={this.changeTab}>Menu3</div>
+                         </div>
+                         <div className='board-container'>
+                             {
+                                 renderBoard // 이렇게 컴포넌트나 엘리먼트가 저장된 변수를 선언한다.
+                             }
+                         </div>
+                     </div>
+                 )
+             }
+         } export default App;
+         ```
+    
+    
 
 - 솔직히, **조건부 렌더링은 방법이** **진짜진짜 많기 때문에 정답은 없다.** ~~알고리즘 같은거다...~~
 
@@ -1141,21 +1198,24 @@ ex) 게시판, 목록, 피드 등등
 - **엘리먼트**를 **리스트**에 넣고 사용할려면 **`key`**를 **attribute**로 줘야한다.
 
     **`key`의 값은 고유해야한다.** 꼭 정수가 아니어도 괜찮다. 문자열도 가능하다. 한 리스트안에서 각기 다른 `key` 값을 갖고 있으면 된다.
-```jsx
+    
+    ```jsx
     const jsxList = [<div key={1}>첫번째 JSX</div>, 
-    				 <div key={2}>두번째 JSX</div>, 
+                     <div key={2}>두번째 JSX</div>, 
                      <div key={3}>세번째 JSX</div>]
     
-const componentList = [<Comp key={1}>첫번째 컴포넌트</Comp>,
+    const componentList = [<Comp key={1}>첫번째 컴포넌트</Comp>,
                            <Comp key={2}>두번째 컴포넌트</Comp>,
                            <Comp key={3}>세번째 컴포넌트</Comp>]
-```
+    ```
+    
+- 솔직히 `key`를 **지정 안해줘도 작동은 잘된다.** 단지 리스트안에서의 혼동을 없앨려고 사용하는 건데. `key`를 지정 안하면 콘솔창에 에러 메세지가 나온다.
 
-솔직히 `key`를 **지정 안해줘도 작동은 잘된다.** 단지 리스트안에서의 혼동을 없앨려고 사용하는 건데. `key`를 지정 안하면 콘솔창에 에러 메세지가 나온다.
+    ![Untitled15.png](readme_img/Untitled15.png)
 
-![Untitled15.png](readme_img/Untitled15.png)
+    에러 메세지가 보기 싫기도 하고, 혹시 모를 버그를 방지하기 위해 **왠만하면 key를 지정해주자.**
 
-에러 메세지가 보기 싫기도 하고, 혹시 모를 버그를 방지하기 위해 **왠만하면 key를 지정해주자.**
+
 
 ### iii) React Fragment
 
