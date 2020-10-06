@@ -226,12 +226,12 @@ Tag: Frontend
     컴포넌트가 제거되는 단계이다. (DOM에서 삭제되는 단계, 화면에서 없어지는 단계)
 
     - **1. `componentWillUnmount()`**
-        
+      
         - 컴포넌트가 제거되기 직전에 호출된다.
         
     - `componentDidMount()`에서 추가한 이벤트 리스너나 타이머를 해제할 때, 네트워크 요청을 취소할 때 활용된다.
       
-        - **예제 **
+        - **예제**
 
           ```jsx
           import React, { Component } from 'react'
