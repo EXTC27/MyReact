@@ -53,7 +53,7 @@ Tag: Frontend
         
     - **주의 할점!!!** **state**에 **props**를 복사하지 말자. **불필요한 작업**이며 **버그를 발생**시킨다.
         
-        - **예제**
+        - **예제** 
         
             ```jsx
             import React, { Component } from 'react'
@@ -93,7 +93,7 @@ Tag: Frontend
            >4. String or Number : DOM상의 Text 노드로 렌더링 된다.
            >5. Portal : 별도의 DOM 하위 트리에 자식 엘리먼트를 렌더링한다. (거의 써본적 없)
 
-       - **예제**
+       - **예제** 
 
            ```jsx
            import React, { Component } from 'react'
@@ -126,7 +126,7 @@ Tag: Frontend
 
         - `addEventListener()` 메서드를 설정하기 좋은 위치이다.
 
-        - **예제**
+        - **예제** 
 
             ```jsx
             import React, { Component } from 'react'
@@ -175,7 +175,7 @@ Tag: Frontend
           >1. `prevProps`
           >
           >   - 업뎃 되기 전 **props**를 인자로 받을 수 있다. 
-          >     이전 props와의 변경사항을 확인 한 후, 추가적인 액션을 설정하는 것에 유용하다.
+          >     이전 props와의 변경사항을 확인 한 후, 추가적인 액션을 설정하는 것에 유용하다. 
           >
           >     ```jsx
           >     componentDidUpdate(prevProps){
@@ -192,7 +192,7 @@ Tag: Frontend
           >2. `prevState`
           >
           >   - `prevProps` 와 비슷하다. 업뎃 되기 전 **state**를 인자로 받을 수 있다.
-          >     이전 **state**와 비교하여 실행여부를 확인할 때 주로 사용된다.
+          >     이전 **state**와 비교하여 실행여부를 확인할 때 주로 사용된다. 
           >
           >     ```jsx
           >     componentDidUpdate(prevProps, prevState){ //prevProps를 사용 안하더라도 무조건 2번때 파라미터에 넣어줘야한다.
@@ -230,7 +230,7 @@ Tag: Frontend
         
     - `componentDidMount()`에서 추가한 이벤트 리스너나 타이머를 해제할 때, 네트워크 요청을 취소할 때 활용된다.
         
-        - **예제**
+        - **예제 **
 
           ```jsx
       import React, { Component } from 'react'
@@ -253,7 +253,7 @@ Tag: Frontend
 
 - **전체 생명주기 예제** (한번 감을 잡아보자.)
 
-    생명주기 메서드에 `console.log()` 찍고 확인해 보자.
+    생명주기 메서드에 `console.log()` 찍고 확인해 보자. 
 
     ```jsx
     //App.js
