@@ -44,15 +44,15 @@ Tag: Frontend
         - 컴포넌트가 **생성될 때 단 한번 실행**된다.
         
         - 이 메서드에서만 **state 초기화**와 **메서드 바인딩**이 가능하다.
-            
+          
             - `this.state`에 객체를 할당하여 **state**를 초기화
         
         - 메서드를 바인딩하거나 **state**를 초기화하는 작업이 없다면, 생성자를 구현하지 않아도 된다.
         
     - 생성자를 구현할 때에는 다른 구문에 앞서 `super(props)`를 호출해야 한다. 그렇지 않으면 `this.props`가 생성자 내에서 정의되지 않아 버그로 이어질 수 있다.
-        
+      
     - **주의 할점!!!** **state**에 **props**를 복사하지 말자. **불필요한 작업**이며 **버그를 발생**시킨다.
-        
+      
         - **예제** 
         
             ```jsx
@@ -112,15 +112,15 @@ Tag: Frontend
        
 
     - **3. `componentDidMount()`**    
-        
+      
         - 컴포넌트가 마운트된 직후, 즉 DOM 트리에 삽입된 직후에 호출된다.
         
         - 다음과 같은 경우에 주로 활용된다.
-            
+          
             >1. DOM 노드를 확인하고 초기화해야 하는 작업이 있는 경우
-            >   ex) 모달처럼 DOM에 마운트되고 크기나 위치를 확인한 다음 작업을 진행하는 경우
+            >     ex) 모달처럼 DOM에 마운트되고 크기나 위치를 확인한 다음 작업을 진행하는 경우
             >2. 외부의 데이터를 불러오거나 네트워크 요청을 보내야하는 경우
-        >3. 타이머 설정
+            >3. 타이머 설정
             
         - `setState()` 메서드가 많이 사용되는 위치이다.
 
@@ -226,25 +226,26 @@ Tag: Frontend
     컴포넌트가 제거되는 단계이다. (DOM에서 삭제되는 단계, 화면에서 없어지는 단계)
 
     - **1. `componentWillUnmount()`**
+        
         - 컴포넌트가 제거되기 직전에 호출된다.
         
     - `componentDidMount()`에서 추가한 이벤트 리스너나 타이머를 해제할 때, 네트워크 요청을 취소할 때 활용된다.
-        
+      
         - **예제 **
 
           ```jsx
-      import React, { Component } from 'react'
-          
-      class App extends Component {
-          
-          /* 생략 */
+          import React, { Component } from 'react'
+
+          class App extends Component {
+
+              /* 생략 */
           
               componentWillUnmount(){ // 이벤트 리스너를 해제할 때
                   window.removeEventListener('resize', /*생략*/ )
           
-          }
+              }
           
-          /* 생략 */
+              /* 생략 */
           
           } export default App;
           ```
@@ -617,6 +618,7 @@ upCount(){
     
     그렇기 때문에 에러 메세지도 다음과 같이 뜨는거다. ('`this` 안에는 `setState`가 없습니다~~ 뭔지 모르겠어요~~')
     
+
 ![Untitled10.png](readme_img/Untitled10.png)
     
 
