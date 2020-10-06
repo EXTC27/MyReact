@@ -100,26 +100,27 @@ ex) 유저 정보, 현재 페이지 정보, 기타 등등
             ```
 
         - 결과화면
-    ![Untitled.png](readme_img/Untitled.png)
-        
-- 그 다음 Context API를 적용해보자. 이때, App의 state를 전역 state로 지정하고, Child를 건너뛰어서 Grand1에서 전역 state를 사용해 보겠다.
+
+            ![Untitled.png](readme_img/Untitled.png)
+
+    - 그 다음 Context API를 적용해보자. 이때, App의 state를 전역 state로 지정하고, Child를 건너뛰어서 Grand1에서 전역 state를 사용해 보겠다.
         - 예제 코드
-    
-        ```jsx
+
+            ```jsx
             import React, { Component } from 'react';
-    
-        // 먼저 React.createContext 객체를 생성한다. context객체는 중간다리 역할을 해준다.
+
+            // 먼저 React.createContext 객체를 생성한다. context객체는 중간다리 역할을 해준다.
             const GlobalState = new React.createContext(); 
-    
-        class App extends Component {
+
+            class App extends Component {
               constructor(props){
                 super(props);
                 this.state = {
                   appState: 'App의 state 입니다.'
                 }
               }
-    
-          render(){
+
+              render(){
                 return(
             			// context객체에 this.state를 심고, 하위 컴포넌트들에게 제공하겠다는 의미이다.
                   <GlobalState.Provider value={this.state}> 
@@ -132,12 +133,12 @@ ex) 유저 정보, 현재 페이지 정보, 기타 등등
                 )
               }
             } export default App;
-    
-        class Child extends Component {
+
+            class Child extends Component {
             	/* 생략 */
             }
-    
-        class Grand1 extends Component {
+
+            class Grand1 extends Component {
               render(){
                 return(
                   // context 객체에 심어진 전역변수를 참조하려면, 밑에처럼 컴포넌트를 선언해준다.
@@ -155,43 +156,44 @@ ex) 유저 정보, 현재 페이지 정보, 기타 등등
                 )
               }
             }
-    
-        class Grand2 extends Component {
+
+            class Grand2 extends Component {
               /* 생략 */
             }
             ```
-    
-    - 결과화면
-        ![Untitled1.png](readme_img/Untitled1.png)
-    
+
+        - 결과화면
+
+            ![Untitled1.png](readme_img/Untitled1.png)
+
     - 이제 Context API를 통해서 Grand2에서 App의 state를 업데이트 해보자.
-    - 예제 코드
-    
+        - 예제 코드
+
             ```jsx
-        import React, { Component } from 'react';
-    
+            import React, { Component } from 'react';
+
             const GlobalState = new React.createContext();
 
             class App extends Component {
-          constructor(props){
+              constructor(props){
                 super(props);
                 this.state = {
                   appState: 'App의 state 입니다.',
-    
+
             			// App의 state에 변화를 주어야하기 때문에 이벤트 콜백은 App안에 선언해야한다.
-        			// 그리고 이벤트 콜백을 App의 state로 지정하여 전역으로 사용할 수 있게 해야한다.
+            			// 그리고 이벤트 콜백을 App의 state로 지정하여 전역으로 사용할 수 있게 해야한다.
                   changeAppState: this.changeAppState
                 }
               }
-    
+
               changeAppState = (e) => {
-            this.setState({
+                this.setState({
                   appState: e.currentTarget.value
                 })
               }
-    
+
               render(){
-            return(
+                return(
                   // context객체에 this.state를 심고, 하위 컴포넌트들에게 제공하겠다는 의미이다.
                   <GlobalState.Provider value={this.state}> 
                     <div>
@@ -203,11 +205,11 @@ ex) 유저 정보, 현재 페이지 정보, 기타 등등
                 )
               }
             } export default App;
-    
+
             /* 생략 */
 
             class Grand2 extends Component {
-          render(){
+              render(){
                 return(
                   <GlobalState.Consumer> 
                   {global => ( 
@@ -225,26 +227,27 @@ ex) 유저 정보, 현재 페이지 정보, 기타 등등
               }
             }
             ```
-    
+
         - 결과화면
-    ![Untitled2.png](readme_img/Untitled2.png)
-        
-- 사실 `Consumer` 컴포넌트를 사용하다보면 불편한 점이 생기는데...
+
+            ![Untitled2.png](readme_img/Untitled2.png)
+
+    - 사실 `Consumer` 컴포넌트를 사용하다보면 불편한 점이 생기는데...
     바로 `render` 메서드 안에서 밖에 못쓴다는 것과 코드가 좀 더러워진다는 점이다.
 
         이때 사용하는 것이 **`contextType`**이다.
-    
-    **`contextType`**은 상위 컴포넌트 중 가장 가까운 `Provider`를 찾아 그 값을 읽을 수 있게 해준다.
+
+        **`contextType`**은 상위 컴포넌트 중 가장 가까운 `Provider`를 찾아 그 값을 읽을 수 있게 해준다.
         그리고 `render` 메서드 뿐만아니라 모든 생명주기 메서드에 사용 가능하다.
 
         - 예제 코드
-    
-        ```jsx
+
+            ```jsx
             // Grand1을 contextType을 이용해서 변환해보자
 
             // 일단 이거는 Consumer를 사용한 기존 코드
             class Grand1 extends Component {
-          render(){
+              render(){
                 return(      
                   <GlobalState.Consumer> 
                   {global => (                    
@@ -259,10 +262,10 @@ ex) 유저 정보, 현재 페이지 정보, 기타 등등
                 )
               }
             }
-    
+
             // contextType을 사용하면 밑에와 같다.
             class Grand1 extends Component {
-        	render(){
+            	render(){
             		return(
             			<>
                     <div>
@@ -272,12 +275,13 @@ ex) 유저 정보, 현재 페이지 정보, 기타 등등
                   </>
             		)
             	}
-    
+
             } Grand1.contextType = GlobalState; // 이렇게 선언해주면 가장 가까운 context를 읽을 수 있다.
             ```
 
             물론 결과는 같다.
-    ![Untitled3.png](readme_img/Untitled3.png)
+
+            ![Untitled3.png](readme_img/Untitled3.png)
 
 <br/>
 
