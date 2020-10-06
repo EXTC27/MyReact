@@ -880,64 +880,64 @@ Tag: Frontend
 /*CSS 코드*/
     
     .app {
-      width: 500px;
-      height: 500px;
-      border: 10px solid black;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+        width: 500px;
+        height: 500px;
+        border: 10px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .menu-container{
-      width: 100%;
-      /* border: 5px solid gray; */
-      box-sizing: border-box;
-      display: flex;
-      justify-content: space-around;
+        width: 100%;
+        /* border: 5px solid gray; */
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-around;
     }
     .menu-container *{
-      padding: 5px 10px;
-      margin: 5px 10px;
-      border: 1px solid black;
-      color: white;
-      cursor: pointer;
+        padding: 5px 10px;
+        margin: 5px 10px;
+        border: 1px solid black;
+        color: white;
+        cursor: pointer;
     }
     .menu-container :nth-child(1){
-      background-color: darkgreen;
+        background-color: darkgreen;
     }
     .menu-container :nth-child(2){
-      background-color: maroon;
+        background-color: maroon;
     }
     .menu-container :nth-child(3){
-      background-color: darkslateblue;
+        background-color: darkslateblue;
     }
 
     .board-container{
-      width: 90%;
-      height: 80%;
-      /* border: 3px solid black; */
-      /* box-sizing: border-box; */
-      display: flex;
+        width: 90%;
+        height: 80%;
+        /* border: 3px solid black; */
+        /* box-sizing: border-box; */
+        display: flex;
     }
     .board-container *{
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-size: 200%;
-      color: white;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 200%;
+        color: white;
     }
     .board-container .board1{
-      background-color: darkgreen;
+        background-color: darkgreen;
     }
     .board-container .board2{
-      background-color: maroon;
+        background-color: maroon;
     }
     .board-container .board3{
-      background-color: darkslateblue;
+        background-color: darkslateblue;
     }
     ```
 
