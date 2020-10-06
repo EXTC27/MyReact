@@ -1,4 +1,4 @@
-# [야매 React] 1. 기초편
+# ![야매 React] 1. 기초편
 
 Created: May 4, 2020 4:44 PM
 Created By: Sinjae Kim
@@ -8,9 +8,13 @@ Tag: Frontend
 
 ---
 
----
+<br/>
+
+
 
 # 1. '기본'이 중요하다.
+
+<br/>
 
 ## 1) 선수 지식
 
@@ -26,11 +30,14 @@ Tag: Frontend
     - **콜백함수**
     - **프로미스 / async, await**
     - **화살표함수 ( () ⇒ {} )**
-
 - 사실 *바닐라 JS*를 알아야하는 진짜 이유는 따로있다. 
 '아 나는 도저히 이걸 *React*로 구현 못하겠어....' 싶으면 그냥 *바닐라 JS*로 조지면 되기 때문이다.
 
+<br/>
+
 ---
+
+<br/>
 
 ## 2) JSX
 
@@ -40,6 +47,8 @@ Tag: Frontend
 - 근데 실상 *html* 태그처럼 쓰이니 걍 *html* 태그로 봐도 무방하다. 
 하지만, **미세한 차이점이 있다는 것만 알고있자. 
 (***html* 문법과 완전히 호환되지 않기 때문이다. 이건 차차 알아가 보자.)
+
+
 
 ### JSX에 표현식 포함하기
 
@@ -54,6 +63,8 @@ Tag: Frontend
     const jsx2 = <div>{msgMethod('파라미터어어어어')}</div>
     ```
 
+
+
 ### JSX의 Attribute 선언
 
 - *JSX*는 *html*과 다르게 camelCase로 attribute를 선언한다.
@@ -62,7 +73,11 @@ Tag: Frontend
     <div className="app">어트리뷰트는 camelCase</div>
     ```
 
+<br/>
+
 ---
+
+<br/>
 
 ## 3) Element
 
@@ -86,7 +101,11 @@ Tag: Frontend
     								 **</div>**
     ```
 
+<br/>
+
 ---
+
+<br/>
 
 ## 4) Component ☆☆☆
 
@@ -96,9 +115,10 @@ Tag: Frontend
 - **화면, 이벤트, 기능 전부 컴포넌트 단위로 구현된다고 생각하면 된다!!!**
 - **컴포넌트는 캡슐화하여 하나의 객체 혹은 태그처럼 사용할 수 있다!!!**
 - **컴포넌트는 무조건 대문자로 시작해야한다!!!**
-
 - 선언 방식은 **함수형**과 **클래스형**이 있는데 우리는 **클래스형**을 사용할테니 
 **함수형** 컴포넌트 설명은 과감히 제낀다.
+
+
 
 ### ☆클래스형 컴포넌트
 
@@ -110,7 +130,7 @@ Tag: Frontend
     `create-react-app`하면 `App.js` 에 기본적으로 다음과 같이 작성되어있다.
     **다 필요 없다. 왜냐? 함수형 컴포넌트이기도 하고, 개발할려면 저거 다 지워야한다.** 
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled.png)
+    ![Untitled.png](readme_img/Untitled.png)
 
 - 이게 가장 기본적인 클래스형 컴포넌트 선언 형태이다.
 
@@ -147,22 +167,22 @@ Tag: Frontend
 
     `npm start` 해주면 다음과 같은 화면이 나온다!!
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%201.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%201.png)
+  ![Untitled1.png](readme_img/Untitled1.png)
 
     크롬 DevTool에서 보면 *html*에서도 다음과 같이 나온다.
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%202.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%202.png)
+  ![Untitled2.png](readme_img/Untitled2.png)
 
 - **????** 근데 우리는 `App.js` 안에서 코드만 살짝 바꿨는데 어떻게 *html*의 *body*태그 안에 화면이 바뀌나요?
 
     사실 `create-react-app`을 실행시켜서 *React* 프로젝트를 생성하면
     `public/index.html` 파일과 `src/index.js` 파일이 자동으로 생성된다.
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%203.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%203.png)
+    ![Untitled3.png](readme_img/Untitled3.png)
 
-    먼저 `index.js` 파일을 보면 다음과 같다. 
+    먼저 `index.js` 파일을 보면 다음과 같다.
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%204.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%204.png)
+    ![Untitled4.png](readme_img/Untitled4.png)
 
     위의 코드는 한마디로 *react*에서 제공하는 `ReactDOM`객체의 `render` 메서드를 사용해서 `id`가 `'root'`인 태그에 `App` 컴포넌트를 집어 쳐 넣겠다는 의미다.
 
@@ -170,14 +190,18 @@ Tag: Frontend
 
     이때 `index.html` 파일을 보면... 어라? `id`가 `'root'`인 태그가 있네?
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%205.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%205.png)
+    ![Untitled5.png](readme_img/Untitled5.png)
 
     이쯤 되면 얼추 감잡고 이해갔을거라고 본다.....
 
     **우리는 `App` 컴포넌트 밑에 자식 컴포넌트를 선언하고 사용함으로써 화면을 구성할 수 가 있다. 
     (진짜 특별 케이스가 아니면 우리는 `index.html`파일과 `index.js`파일을 수정해야할 이유가 전혀 없다.)**
 
+<br/>
+
 ---
+
+<br/>
 
 ## 5) props
 
@@ -222,7 +246,7 @@ Tag: Frontend
 
     화면을 보면 다음과 같이 나온다.
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%206.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%206.png)
+    ![Untitled6.png](readme_img/Untitled6.png)
 
     이제 `PropsTest`컴포넌트에 `props`를 넘겨보자
 
@@ -263,7 +287,7 @@ Tag: Frontend
 
     다음과 같은 화면이 나올 것이다.
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%207.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%207.png)
+    ![Untitled7.png](readme_img/Untitled7.png)
 
 - `PropsTest.js` 파일에서 `{this.props.test}`라는 구문이 있다.
 
@@ -327,9 +351,13 @@ Tag: Frontend
 
     결과 화면
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%208.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%208.png)
+    ![Untitled8.png](readme_img/Untitled8.png)
+
+<br/>
 
 ---
+
+<br/>
 
 ## 6) state
 
@@ -377,7 +405,7 @@ Tag: Frontend
 
     결과화면
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%209.png](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/Untitled%209.png)
+    ![Untitled9.png](readme_img/Untitled9.png)
 
 ### setState()
 
@@ -428,9 +456,9 @@ Tag: Frontend
     } export default App;
     ```
 
-    결과화면
+  결과화면
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/btn_toggle.gif](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/btn_toggle.gif)
+  ![btn_toggle.gif](readme_img/btn_toggle.gif)
 
     - **주의해야할 점!!!!**
 
@@ -442,7 +470,11 @@ Tag: Frontend
 
         **그리고 비동기적으로 작동한다!!!**
 
+<br/>
+
 ---
+
+<br/>
 
 ## +α) 가상 DOM
 
@@ -461,12 +493,13 @@ Tag: Frontend
 
     크롬 DevTools를 보면 `button` 태그만 바뀌는 것을 알 수 있다.
 
-    ![%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/virtual_DOM.gif](%5B%E1%84%8B%E1%85%A3%E1%84%86%E1%85%A2%20React%5D%201%20%E1%84%80%E1%85%B5%E1%84%8E%E1%85%A9%E1%84%91%E1%85%A7%E1%86%AB%203ddecaa9fd854638bd270e1b487070e2/virtual_DOM.gif)
+    ![virtual_DOM.gif](readme_img/virtual_DOM.gif)
 
 ---
 
-쉬십시오 선생님... ㅠ ✨무섭다 무서워... 당신이란 사람의 열정...✨ 
+
 
 오빠 오늘 어른이날인데 쉬세요...ㅠ
 
 *얘들아 전국 1등해야지...*
+

@@ -1,4 +1,4 @@
-[야매 React] 0. 설치 및 환경구축 편
+# [야매 React] 0. 설치 및 환경구축
 
 Created: May 4, 2020 1:43 PM
 Created By: Sinjae Kim
