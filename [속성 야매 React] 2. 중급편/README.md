@@ -40,7 +40,7 @@ Tag: Frontend
     결과물로 나온 Element들이 가상 DOM에 삽입되고 실제 DOM을 업데이트하기까지의 과정을 말한다.
 
     - **1. `constructor()`**
-        
+      
         - 컴포넌트 **생성자 메서드**이다. 마운트되기 전에 호출된다.
         - 컴포넌트가 **생성될 때 단 한번 실행**된다.
         - 이 메서드에서만 **state 초기화**와 **메서드 바인딩**이 가능하다.
@@ -65,11 +65,8 @@ Tag: Frontend
         	/* 생략 */
         	
         } export default App;
-    ```
-        
-        
-        
-    - **2. `render()`**
+        ```
+    - **2. `render()`**        
         
         - **화면을 그리는 함수**라고 생각하면 된다.
         - 클래스형 컴포넌트에서 **반드시 구현돼야하는 유일한 메서드**이다. 
@@ -81,14 +78,11 @@ Tag: Frontend
             2. 배열과 Fragments : 추후 설명하겠다.
             3. Boolean or Null : 추후 설명하겠다.
             4. String or Number : DOM상의 Text 노드로 렌더링 된다.
-        5. Portal : 별도의 DOM 하위 트리에 자식 엘리먼트를 렌더링한다. (거의 써본적 없)
-        
-        ```jsx
-    import React, { Component } from 'react'
-        
-    class App extends Component {
-        
-    	/* 생략 */
+            5. Portal : 별도의 DOM 하위 트리에 자식 엘리먼트를 렌더링한다. (거의 써본적 없)
+    ```jsx
+        import React, { Component } from 'react'
+        class App extends Component {
+            /* 생략 */
         
         	render(){
         		return(
@@ -99,7 +93,7 @@ Tag: Frontend
         } export default App;
     ```
         
-    - **3. `componentDidMount()`**
+    - **3. `componentDidMount()`**    
         - 컴포넌트가 마운트된 직후, 즉 DOM 트리에 삽입된 직후에 호출된다.
         - 다음과 같은 경우에 주로 활용된다.
             1. DOM 노드를 확인하고 초기화해야 하는 작업이 있는 경우
@@ -133,6 +127,8 @@ Tag: Frontend
 
         } export default App;
         ```
+        
+        
 
 - **Updating (컴포넌트 업뎃) :**
 
@@ -463,10 +459,11 @@ Tag: Frontend
 
       이게 컴포넌트의 깊이가 깊지 않으면 크게 상관없긴 한데... 만약에 깊어진다면??????
       
+
 **성능 저하가 눈에 보일수가 있다!!!**
       
   - **해결하는 방법??**
-      
+    
       아 언급하고 싶지않았는데....
       
       생명주기 메서드 중에 `shouldComponentUpdate()`라는 메서드가 있다.
@@ -480,7 +477,8 @@ Tag: Frontend
       - **성능 최적화**만을 위해 존재하는 메서드이다. 이 메서드를 통해서 렌더링을 방지하면 버그가 발생한다.
       
             `shouldComponentUpdate()`메서드는 기본적으로 `true`를 리턴한다.
-      만약 이 메서드가 `false`를 리턴하면?? **업데이트 과정이 바로 종료된다!!!!!!!!!!!!**
+      
+        만약 이 메서드가 `false`를 리턴하면?? **업데이트 과정이 바로 종료된다!!!!!!!!!!!!**
       
       그렇기 때문에 다음과 같이 활용하여 성능 최적화를 이룰 수 있다.
       
@@ -507,8 +505,9 @@ Tag: Frontend
       `shouldComponentUpdate()`메서드가 하위 컴포넌트의 업데이트를 막는 것이다.
       
         ![Untitled9.png](readme_img/Untitled9.png)
-    
-    
+      ```
+
+​    
 
 아무리 야매라도 생명주기는 확실하게 집고 넘어가야하기 때문에 설명이 엄청 길어졌다.
 앞으로 나올 개념들은 간단(?)하기 때문에.. 생명주기 공부하면서 긴장했던거 풀길....
@@ -585,6 +584,7 @@ upCount(){
 
     ![Untitled10.png](readme_img/Untitled10.png)
     
+
 따라서 **메서드 바인딩**을 통해 이벤트 콜백안의 `this`가 **컴포넌트를 가리키도록** 만들어야한다!!
 
 ### i) 바인딩 하는 법
@@ -680,7 +680,7 @@ upCount(){
     /* 생략 */
   
   } export default App;
-    ```
+  ```
 
 ---
 
@@ -908,20 +908,20 @@ upCount(){
 - 조건식에 따라 렌더링을 하는데, **주의 해야할 점은 JSX 구문안에서 조건부 렌더링을 할려면 조건식에 무조건 return 값이 있어야한다.**
 
 따라서 **JSX 구문안에는 `&& 연산자`와 `삼항 연산자`를 쓰는 것을 추천**한다.
-  
+
   ```jsx
     // && 연산자
     조건식 && <div>조건식이 true면 리턴됩니다.</div>
   
   // 삼항 연산자
     조건식 ? <div>조건식이 true면 리턴됩니다.</div> : <div>조건식이 false면 리턴됩니다.</div>
-    ```
-  
+  ```
+
   - **위의 메뉴탭 예제를 삼항 연산자로 바꾸면?**
   
       ```jsx
         /* 생략 */
-  
+        
       render(){
             return(
               <div className='app'>
@@ -954,25 +954,26 @@ upCount(){
               </div>
             )
           }
-  
+        
       /* 생략 */
-        ```
+      ```
   
 - `if else`를 쓰면 안되나요??
 
     `if else`는 우리가 설정해주지 않는 이상 기본적으로 return되는게 없기 때문에 **JSX 구문안에서는 사용할 수 없다.**
     
+
 `if else`를 이용해서 조건부 렌더링을 할려면 다른 방식으로 접근해야한다.
     
 1. 메서드에서 리턴을 시킨다.
         - 예시 코드
     
         위의 메뉴탭 예제를 바꿔보겠다.
-    
+        
         ```jsx
             import React, { Component } from 'react';
             import './App.css'
-    
+        
         class App extends Component{
               constructor(props){
                 super(props)
@@ -980,14 +981,14 @@ upCount(){
                   curMenu: 'menu1'
                 }
               }
-    
+        
           changeTab = (event) => { // 이벤트 콜백을 통해 state를 바꾼다.
                 console.log(event.currentTarget.className)
                 this.setState({
                   curMenu: event.currentTarget.className
                 })
               }
-    
+        
         	// if, else 문을 사용한 경우. 메서드에서 엘리먼트나 컴포넌트를 리턴한다.
             	// 이 메서드가 하나의 경우라도 리턴하는게 없으면 에러뜬다.
             	renderBoard = () => {
@@ -1001,7 +1002,7 @@ upCount(){
                   return <div className='board3'><div className="msg">Board 3</div></div>
                 }
               }
-    
+        
           render(){
                 return(
                   <div className='app'>
@@ -1025,11 +1026,11 @@ upCount(){
         - 예시 코드
     
         위의 메뉴탭 예제를 바꿔보겠다.
-    
+        
         ```jsx
             import React, { Component } from 'react';
             import './App.css'
-    
+        
         class App extends Component{
               constructor(props){
                 super(props)
@@ -1037,14 +1038,14 @@ upCount(){
                   curMenu: 'menu1'
                 }
               }
-    
+        
           changeTab = (event) => { // 이벤트 콜백을 통해 state를 바꾼다.
                 console.log(event.currentTarget.className)
                 this.setState({
                   curMenu: event.currentTarget.className
                 })
               }
-    
+        
           render(){
             		// 이렇게 render() 메서드안에 컴포넌트나 엘리먼트를 변수에 저장한다.
                 let renderBoard
@@ -1057,7 +1058,7 @@ upCount(){
                 else {
                   renderBoard = <div className='board3'><div className="msg">Board 3</div></div>
                 }
-    
+        
             return(
                   <div className='app'>
                     <div className='menu-container'>
@@ -1147,8 +1148,8 @@ ex) 게시판, 목록, 피드 등등
 const componentList = [<Comp key={1}>첫번째 컴포넌트</Comp>,
                            <Comp key={2}>두번째 컴포넌트</Comp>,
                            <Comp key={3}>세번째 컴포넌트</Comp>]
-    ```
-    
+```
+
 솔직히 `key`를 **지정 안해줘도 작동은 잘된다.** 단지 리스트안에서의 혼동을 없앨려고 사용하는 건데.
     `key`를 지정 안하면 콘솔창에 에러 메세지가 나온다.
     
