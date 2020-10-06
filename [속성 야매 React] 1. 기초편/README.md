@@ -1,4 +1,4 @@
-# ![야매 React] 1. 기초편
+# [속성! 야매 React] 1. 기초편
 
 Created: May 4, 2020 4:44 PM
 Created By: Sinjae Kim
@@ -12,7 +12,7 @@ Tag: Frontend
 
 
 
-# 1. '기본'이 중요하다.
+# *1. '기본'이 중요하다.*
 
 <br/>
 
