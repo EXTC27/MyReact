@@ -90,20 +90,18 @@ Tag: Frontend
 
 ## 4) React 프로젝트 실행, 빌드파일 생성
 
-- `npx create-react-app --template typescript react-ts-prac` 명령어를 통해서 
-  'react-ts-prac' 이라는 디렉토리가 지정한 경로에 생성되었을 것입니다.
-
-![Untitled1.png](readme_img/Untitled1.png)
+- `npx create-react-app --template typescript react-ts-prac` 명령어를 통해서 'react-ts-prac' 이라는 디렉토리가 지정한 경로에 생성되었을 것입니다.
+  
+  ![Untitled1.png](readme_img/Untitled1.png)
 
 - VS Code로 한번 봅시다. `App.tsx` 파일을 열어보면 다음과 같이 이래저래 써있을 겁니다.
 
   ![Untitled2.png](readme_img/Untitled2.png)
   
-- 개발할 때, 프로젝트 디렉토리(`node_modules` 디렉토리가 존재하는 경로)에서 
-  터미널에 `npm start` 를 입력해 테스트용 서버가 localhost로 실행됩니다.
+- 개발할 때, 프로젝트 디렉토리(`node_modules` 디렉토리가 존재하는 경로)에서 터미널에 `npm start` 를 입력해 테스트용 서버가 localhost로 실행됩니다.
 
-![Untitled3.png](readme_img/Untitled3.png)
-
+  ![Untitled3.png](readme_img/Untitled3.png)
+  
   ![Untitled4.png](readme_img/Untitled4.png)
 
 (놀라지 마세요 이게 초기화면 입니다.)
