@@ -103,8 +103,8 @@ Tag: Frontend
   ![Untitled3.png](readme_img/Untitled3.png)
   
   ![Untitled4.png](readme_img/Untitled4.png)
-
-(놀라지 마세요 이게 초기화면 입니다.)
+  
+  (놀라지 마세요 이게 초기화면 입니다.)
 
 테스트 서버를 중단할려면 터미널에 `ctrl + C` 를 입력하면 됩니다.
 
