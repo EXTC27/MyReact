@@ -46,15 +46,14 @@ Tag: Frontend
         - 이 메서드에서만 **state 초기화**와 **메서드 바인딩**이 가능하다.
             - `this.state`에 객체를 할당하여 **state**를 초기화
         - 메서드를 바인딩하거나 **state**를 초기화하는 작업이 없다면, 생성자를 구현하지 않아도 된다.
-        - 생성자를 구현할 때에는 다른 구문에 앞서 `super(props)`를 호출해야 한다. 
-        그렇지 않으면 `this.props`가 생성자 내에서 정의되지 않아 버그로 이어질 수 있다.
-    - **주의 할점!!!** **state**에 **props**를 복사하지 말자. **불필요한 작업**이며 **버그를 발생**시킨다.
-        
+        - 생성자를 구현할 때에는 다른 구문에 앞서 `super(props)`를 호출해야 한다. 그렇지 않으면 `this.props`가 생성자 내에서 정의되지 않아 버그로 이어질 수 있다.
+        - **주의 할점!!!** **state**에 **props**를 복사하지 말자. **불필요한 작업**이며 **버그를 발생**시킨다.
+
         ```jsx
-    import React, { Component } from 'react'
-        
-    class App extends Component {
-        
+        import React, { Component } from 'react'
+
+        class App extends Component {
+
         	constructor(props){
             super(props)
         		//this.state = { color: this.props.color }  
@@ -65,8 +64,8 @@ Tag: Frontend
         	
         	/* 생략 */
         	
-    } export default App;
-        ```
+        } export default App;
+    ```
         
         
         
