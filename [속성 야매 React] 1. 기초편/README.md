@@ -94,7 +94,7 @@ Tag: Frontend
 
     ```jsx
     /* 
-const element = <div>이거는</div> <div>에러납니다.</div>
+    const element = <div>이거는</div> <div>에러납니다.</div>
     */
     
     const element = 
