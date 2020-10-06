@@ -60,7 +60,7 @@ Tag: Frontend
         		//this.state = { color: this.props.color }  
                 // state에 props를 복사하지말자!
             this.state = { msg: 'Hello, React' }   // this.state를 통한 state 초기화
-        		this.handler = this.handler.bind(this) // 메서드 바인딩
+                this.handler = this.handler.bind(this) // 메서드 바인딩
           }
         	
         	/* 생략 */
