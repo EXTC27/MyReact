@@ -1,4 +1,3 @@
-
 [야매 React] 0. 설치 및 환경구축 편
 
 Created: May 4, 2020 1:43 PM
@@ -16,15 +15,19 @@ Tag: Frontend
 ## **1) 일단 `node js` 부터 설치**
 
 - 버전 번호 상관 없이 그냥 LTS버전 추천함.
+
 - 어차피 패키지관리자 `npm`, `npx` 쓰기위해서 설치하는 것이기 때문에 버전 달라도 뭐 크게 상관없을 듯
+
 - install wizard 뜨면 next 광클 ㄱㄱ
 
     ![image-20200504130941747.png](readme_img/image-20200504130941747.png)
 
 - 설치가 완료되었으면 다음과 같이 cmd창에 `node -v` 명령어를 통해서 설치된 버전확인이 가능하다.
+
 - 만약 `node` 명령어를 못알아 먹으면 환경변수를 설정해준다.
-(이거 방법은 구글링 참고하십시요.... 죄송합니다... )
-![image-20200504132323447.png](readme_img/image-20200504132323447.png)
+  (이거 방법은 구글링 참고하십시요.... 죄송합니다... )
+
+  ![image-20200504132323447.png](readme_img/image-20200504132323447.png)
 
 <br/>
 
@@ -71,7 +74,6 @@ Tag: Frontend
     > npx create-react-app --template typescript {프로젝트 이름}
     ```
     
-    
     ![Untitled.png](readme_img/Untitled.png)
 
 - 로컬 설치 시에는 다음과 같이 해줍니다.
@@ -90,23 +92,31 @@ Tag: Frontend
 
 - `npx create-react-app --template typescript react-ts-prac` 명령어를 통해서 
   'react-ts-prac' 이라는 디렉토리가 지정한 경로에 생성되었을 것입니다.
+
 ![Untitled1.png](readme_img/Untitled1.png)
 
 - VS Code로 한번 봅시다. `App.tsx` 파일을 열어보면 다음과 같이 이래저래 써있을 겁니다.
-![Untitled2.png](readme_img/Untitled2.png)
+
+  ![Untitled2.png](readme_img/Untitled2.png)
   
 - 개발할 때, 프로젝트 디렉토리(`node_modules` 디렉토리가 존재하는 경로)에서 
   터미널에 `npm start` 를 입력해 테스트용 서버가 localhost로 실행됩니다.
+
 ![Untitled3.png](readme_img/Untitled3.png)
-![Untitled4.png](readme_img/Untitled4.png)
+
+  ![Untitled4.png](readme_img/Untitled4.png)
 
 (놀라지 마세요 이게 초기화면 입니다.)
 
 테스트 서버를 중단할려면 터미널에 `ctrl + C` 를 입력하면 됩니다.
 
 - AWS에 배포하기위해 build 파일을 생성해야 할 때는 `npm run build` 명령어를 치면 됩니다.
-![Untitled5.png](readme_img/Untitled5.png)
+
+  ![Untitled5.png](readme_img/Untitled5.png)
+  
+  
   다음과 같이 build 폴더가 생성됩니다.
+  
   ![Untitled%206.png](readme_img/Untitled6.png)
 
 <br/>
@@ -123,9 +133,9 @@ Tag: Frontend
 - `git`을 이용한 버전관리 시, `git pull` 하고 무조건 `npm install`을 한번 해줍시다. 
 없는 라이브러리를 알아서 설치해줍니다.
 
-    ![Untitled7.png](readme_img/Untitled7.png)
+  ![Untitled7.png](readme_img/Untitled7.png)
 
-    (warning 따위 가볍게 무시해주세요.)
+  (warning 따위 가볍게 무시해주세요.)
 
 <br/>
 
@@ -138,35 +148,42 @@ Tag: Frontend
 1. **ES7 React/Redux/GraphQL/React-Native snippets**
 
     React 개발한다면 그냥 국룰.
-![Untitled8.png](readme_img/Untitled8.png)
-    
+
+    ![Untitled8.png](readme_img/Untitled8.png)
+
 2. **Reactjs code snippets**
 
     얘도 그냥 국룰. **ES7 React/Redux/GraphQL/React-Native snippets** 서브.
-![Untitled9.png](readme_img/Untitled9.png)
-    
+
+    ![Untitled9.png](readme_img/Untitled9.png)
+
 3. **JS JSX Snippets**
 
     얘도 서브. JSX 문법 자동완성 안되면 이것도 설치.
-![Untitled10.png](readme_img/Untitled10.png)
-    
+
+    ![Untitled10.png](readme_img/Untitled10.png)
+
 4. **ESLint**
 
     JS 개발한다면 그냥 국룰.
-![Untitled11.png](readme_img/Untitled11.png)
+
+    ![Untitled11.png](readme_img/Untitled11.png)
     
 5. **JavaScript (ES6) code snippets**
-![Untitled12.png](readme_img/Untitled12.png)
-    
+
+    ![Untitled12.png](readme_img/Untitled12.png)
+
 6. **Debugger for Chrome**
 
     구글 크롬과 통합된 디버깅 환경을 제공하는 익스텐션
-![Untitled13.png](readme_img/Untitled13.png)
-    
+
+    ![Untitled13.png](readme_img/Untitled13.png)
+
 7. **vscode-styled-components**
 
     이거는 디자인할 때, 일반적인 css나 scss 대신 styled-components를 사용한다면 쓰기 좋은거.
-![Untitled14.png](readme_img/Untitled14.png)
+
+    ![Untitled14.png](readme_img/Untitled14.png)
 
 <br/>
 
@@ -177,7 +194,9 @@ Tag: Frontend
 ## +α) 구글 확장 프로그램
 
 - **React Developer Tools**
-![Untitled15.png](readme_img/Untitled15.png)
+
+    ![Untitled15.png](readme_img/Untitled15.png)
     
-*react* 컴포넌트 구조와 `props`, `state`를 크롬 DevTools에서 확인할 수 있게 해준다.
+    *react* 컴포넌트 구조와 `props`, `state`를 크롬 DevTools에서 확인할 수 있게 해준다.
+    
     ![Untitled%2016.png](readme_img/Untitled16.png)
