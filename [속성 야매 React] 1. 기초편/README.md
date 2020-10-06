@@ -93,9 +93,11 @@ Tag: Frontend
 - **주의 해야할 점!!** *Element*는 **무조건 하나의 태그로 묶여있어야 한다.**
 
     ```jsx
-    const element1 = <div>이거는</div> <div>에러납니다.</div>
-
-    const element2 = 
+    /* 
+const element = <div>이거는</div> <div>에러납니다.</div>
+    */
+    
+    const element = 
           <div>
               <div>무조건</div>
               <div>하나의 태그로</div>

@@ -172,39 +172,43 @@ Tag: Frontend
         - 기본적으로 `prevProps`, `prevState`, `snapshot` 이라는 파라미터를 받을 수 있다. 
           사용 안할거면 굳이 괄호안에 명시안해도 된다.
 
-          >  - `prevProps`
+          >1. `prevProps`
           >
-          >    업뎃 되기 전 **props**를 인자로 받을 수 있다. 
-          >    이전 props와의 변경사항을 확인 한 후, 추가적인 액션을 설정하는 것에 유용하다.
+          >   업뎃 되기 전 **props**를 인자로 받을 수 있다. 
+          >   이전 props와의 변경사항을 확인 한 후, 추가적인 액션을 설정하는 것에 유용하다.
           >
-          >    ```jsx
-          >    componentDidUpdate(prevProps){
-          >    	if(this.props.name !== prevProps.name){
-          >    		this.setState({
-          >    			/* 생략 */
-          >    		})
-          >    	}
-          >    }
-          >    ```
+          >   ```jsx
+          >   componentDidUpdate(prevProps){
+          >   	if(this.props.name !== prevProps.name){
+          >   		this.setState({
+          >   			/* 생략 */
+          >   		})
+          >   	}
+          >   }
+          >   ```
           >
-          >  - `prevState`
+          >   
           >
-          >    `prevProps` 와 비슷하다. 업뎃 되기 전 **state**를 인자로 받을 수 있다.
-          >    이전 **state**와 비교하여 실행여부를 확인할 때 주로 사용된다.
+          >2. `prevState`
           >
-          >    ```jsx
-          >    componentDidUpdate(prevProps, prevState){ //prevProps를 사용 안하더라도 무조건 2번때 파라미터에 넣어줘야한다.
-          >    	if(this.state.name !== prevState.name){
-          >    		this.setState({
-          >    			/* 생략 */
-          >    		})
-          >    	}
-          >    }
-          >    ```
+          >   `prevProps` 와 비슷하다. 업뎃 되기 전 **state**를 인자로 받을 수 있다.
+          >   이전 **state**와 비교하여 실행여부를 확인할 때 주로 사용된다.
           >
-          >  - `snapshot`
+          >   ```jsx
+          >   componentDidUpdate(prevProps, prevState){ //prevProps를 사용 안하더라도 무조건 2번때 파라미터에 넣어줘야한다.
+          >   	if(this.state.name !== prevState.name){
+          >   		this.setState({
+          >   			/* 생략 */
+          >   		})
+          >   	}
+          >   }
+          >   ```
           >
-          >    생명주기 메서드 중 `getSnapshotBeforeUpdate()` 메서드를 사용했다면 세번째 인자로 `snapshot`을 받을 수 있다. **많이 안쓴다. 나도 안쓴다. 그냥 쓰지말자**
+          >3. `snapshot`
+          >
+          >   생명주기 메서드 중 `getSnapshotBeforeUpdate()` 메서드를 사용했다면 세번째 인자로 `snapshot`을 받을 수 있다. **많이 안쓴다. 나도 안쓴다. 그냥 쓰지말자**
+          >
+          >
 
         - **주의 할점!!!!** `componentDidUpdate()` 메서드 안에 `setState()`를
         **그냥 쌩으로 사용하면 무한루프에 빠진다.
