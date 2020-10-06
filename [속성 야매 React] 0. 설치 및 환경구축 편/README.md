@@ -104,9 +104,9 @@ Tag: Frontend
   
   ![Untitled4.png](readme_img/Untitled4.png)
   
-  (놀라지 마세요 이게 초기화면 입니다.)
-
-테스트 서버를 중단할려면 터미널에 `ctrl + C` 를 입력하면 됩니다.
+  (놀라지 마세요 이게 초기화면 입니다.) 
+  
+  테스트 서버를 중단할려면 터미널에 `ctrl + C` 를 입력하면 됩니다.
 
 - AWS에 배포하기위해 build 파일을 생성해야 할 때는 `npm run build` 명령어를 치면 됩니다.
 
