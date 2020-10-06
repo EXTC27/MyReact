@@ -877,7 +877,7 @@ Tag: Frontend
     ```
 
     ```css
-/*CSS 코드*/
+    /*CSS 코드*/
     
     .app {
         width: 500px;
