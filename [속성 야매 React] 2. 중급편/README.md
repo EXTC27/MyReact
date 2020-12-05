@@ -609,11 +609,11 @@ Tag: Frontend
 
     왜냐??? **바인딩 처리를 안해줘서 `upCount()` 메서드 안의 `this`가 컴포넌트를 가리키지 않기 때문이다!!!!** 
     
-    **바인딩 처리를 안해주면 메서드안의 `this`는 메서드 자신을 가리킨다.**
+    **JS에서 this는 메서드 호출 방식에 따라서 다르게 바인딩 된다. **
 
     ```jsx
     upCount(){
-        this.setState({ // 즉, 여기 선언된 this는 컴포넌트가 아니라 upCount 메서드을 가리키는 것
+        this.setState({ // 즉, 여기 선언된 this는 컴포넌트가 아니다. upCount() 메서드가 어떻게 호출되냐에 따라서 this가 가르키는 클래스는 수시로 바뀐다.
             count: this.state.count + 1,
         })
     }
@@ -643,7 +643,7 @@ Tag: Frontend
                 }
             		
             		// 콜백에서 this가 제대로 작동하려면 아래와 같이 바인딩 해주어야 한다.
-            		this.upCount = this.upCount.bind(this)
+                  this.upCount = this.upCount.bind(this)
               }
 
               upCount(){ // 이벤트 콜백
