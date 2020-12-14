@@ -155,7 +155,7 @@ const element = React.createElement(
 
 다음은 `createEleme` 함수가 반환하는 React 요소의 구조를 보여준다.
 
-![image-20201214153127009](md_img/image-20201214153127009.png)
+![image-20201214153127009](readme_img/image-20201214153127009.png)
 
 React 요소는 불변 객체이기 때문에 속성값을 변경할 수 없다.
 
