@@ -27,7 +27,7 @@ React 개발환경을 직접하는 것보다는 create-react-app과 같은 도�
 
 그리고 같은 폴더에 `simple1.html`, `simple1.js` 두 파일을 만들자.
 
-![image-20201212155436140](C:\Users\SinJ\Desktop\MyGit\Github\MyReact\실전 React\1. React 프로젝트 시작하기\md_img\image-20201212155436140.png)
+![image-20201212155436140](readme_img/image-20201212155436140.png)
 
 `simple1.html`에는 필요한 js 파일과 React에서 사용할 DOM 요소를 정의한다.
 
@@ -64,7 +64,7 @@ ReactDOM.render(React.createElement(LikeBtn), domContainer);
 
 브라우저 주소창에 `simple1.html`의 경로를 입력하면 다음과 같은 화면이 뜬다. 버튼으로 좋아요의 상태를 바꿀 수 있다.
 
-![image-20201212162013915](C:\Users\SinJ\Desktop\MyGit\Github\MyReact\실전 React\1. React 프로젝트 시작하기\md_img\image-20201212162013915.png)
+![image-20201212162013915](readme_img/image-20201212162013915.png)
 
 ---
 
@@ -140,7 +140,7 @@ const domContainer = document.querySelector('#react-root');
 ReactDOM.render(React.createElement(Container), domContainer);
 ```
 
-![image-20201212163709654](C:\Users\SinJ\Desktop\MyGit\Github\MyReact\실전 React\1. React 프로젝트 시작하기\md_img\image-20201212163709654.png)
+![image-20201212163709654](readme_img/image-20201212163709654.png)
 
 <br/>
 
@@ -259,7 +259,7 @@ npm init -y
 
 src 폴더를 만들고 `index.js`, `Button.js` 파일을 만들자.
 
-![image-20201212173429022](C:\Users\SinJ\Desktop\MyGit\Github\MyReact\실전 React\1. React 프로젝트 시작하기\md_img\image-20201212173429022.png)
+![image-20201212173429022](readme_img/image-20201212173429022.png)
 
 이제 필요한 외부 패키지를 설치해 보자.
 
@@ -308,11 +308,11 @@ npx webpack
 
 위 명령어를 실행하면 dist 폴더 밑에 main.js 파일이 생성된다.
 
-![image-20201212175645957](C:\Users\SinJ\Desktop\MyGit\Github\MyReact\실전 React\1. React 프로젝트 시작하기\md_img\image-20201212175645957.png)
+![image-20201212175645957](readme_img/image-20201212175645957.png)
 
 이제 `index.html`을 브라우저로 확인해보자
 
-![image-20201212175658350](C:\Users\SinJ\Desktop\MyGit\Github\MyReact\실전 React\1. React 프로젝트 시작하기\md_img\image-20201212175658350.png)
+![image-20201212175658350](readme_img/image-20201212175658350.png)
 
 웹팩에는 이 외에도 다양한 기능이 있다. JS 파일 압축, CSS 전처리 등 유용한 기능이 많다.
 
@@ -634,4 +634,4 @@ function Room({ match }){
 
 추출된 파라미터는 `match.params.{파라미터 명}` 형식으로 사용될 수 있다.
 
-![image-20201212224216943](C:\Users\SinJ\Desktop\MyGit\Github\MyReact\실전 React\1. React 프로젝트 시작하기\md_img\image-20201212224216943.png)
+![image-20201212224216943](readme_img/image-20201212224216943.png)
