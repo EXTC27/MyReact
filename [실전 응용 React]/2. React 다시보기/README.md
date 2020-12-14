@@ -48,7 +48,7 @@ function MyComponent(){
 
 클릭 이벤트가 발생해도 버튼 색이 바뀌지 않는다. UI 데이터가 변경됐다는 사실을 React가 모르기 때문이다.
 
-컴포넌트의 상태값 혹은 속성값을 이용하면 React가 UI 데이터의 변경을 알 수 있다. 위의 코드를 상태값을 포함하여 작성하면 다음과 같다.
+컴포넌트의 상태값(state) 혹은 속성값(props)을 이용하면 React가 UI 데이터의 변경을 알 수 있다. 위의 코드를 상태값(state)을 포함하여 작성하면 다음과 같다.
 
 ```jsx
 import React, { useState } from 'react';
@@ -66,6 +66,94 @@ function MyComponent(){
 }
 ```
 
+추가적으로, 같은 컴포넌트를 여러 번 사용할 수도 있다. 각 컴포넌트는 상태값을 위한 자신만의 메모리 공간이 있기에, 같은 컴포넌트라도 자신만의 상태값이 존재한다.
+
+
+
+### React.memo
+
+자식 컴포넌트는 부모 컴포넌트가 렌더링될 때마다 같이 렌더링 된다. 만약 부모로부터 받은 속성값(props)이 변경될 때만 렌더링되길 원한다면 `React.memo`를 이용할 수 있다.
+
+```jsx
+import React, { useState } from 'react';
+import Title from './Title.js';
+
+function Todo(){
+    const [count, setCount] = useState(0);
+    function onClick(){
+        setCount(count + 1);
+    }
+    return (
+    	<div>
+        	<Title title={`카운트: ${count}`} />
+            <button onClick={onClick}>증가</button>
+        </div>
+    )
+}
+```
+
+```jsx
+// Title.js
+function Title(props){
+    return <p>{props.title}</p>;
+}
+export default React.memo(Title);
+```
+
+
+
 <br/>
 
 ### 불변 객체로 관리하는 속성값, 상태값
+
+props는 불변(immutable) 변수이지만, state는 불변 변수가 아니다. 하지만 state도 불변 변수로 관리하는게 좋다. 불변 변수로 관리하면 코드의 복잡도가 낮아진다.
+
+---
+
+<br/>
+
+## 2. 컴포넌트 함수의 반환값
+
+1. 컴포넌트
+2. HTML에 정의된 거의 모든 태그
+3. 문자열, 숫자
+4. 배열
+   - 리액트 요소의 배열이라면, 각 리액트 요소는 key 속성값을 갖고 있어야 한다.
+5. Fragment
+   - Fragment 내부의 리액트 요소는 key 값을 부여하지 않아도 된다.
+6. null, boolean
+   - 아무것도 렌더링하지 않는다.
+7. React Portal
+
+---
+
+<br/>
+
+## 3. React 요소와 가상DOM
+
+React는 렌더링 성능을 위해 가상DOM을 사용한다.
+
+브라우저에서 DOM을 변경하는 것은 비교적 오래 걸린다. 따라서 빠른 렌더링을 위해서는 DOM 변경을 최소화해야한다.
+
+그래서 React는 메모리에 가상DOM을 올려 놓고 이전과 이후의 가상DOM을 비교해서 변경된 부분만 실제 DOM에 반영하는 전략을 채택했다.
+
+<br/>
+
+### React 요소의 이해
+
+JSX 문법으로 작성된 코드는 바벨을 통해 `createElement` 함수로 변경된다. `createElement` 함수는 React 요소를 반환한다.
+
+```jsx
+const element = <a href="https://google.com">Click</a>;
+// 위의 JSX 문법은 밑의 createElement 함수를 사용한 코드로 변경된다.
+const element = React.createElement(
+	'a',
+    { href: 'https://google.com' },
+    'Click'
+)
+```
+
+다음은 `createEleme` 함수가 반환하는 React 요소의 구조를 보여준다.
+
+![image-20201214153127009](md_img/image-20201214153127009.png)
+
