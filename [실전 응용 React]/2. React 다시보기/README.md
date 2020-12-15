@@ -196,3 +196,321 @@ React 요소의 type이 컴포넌트라면, 컴포넌트 함수를 호출해서 
 > 엄밀히 말하면 React 요소는 파이버(fiber)라는 구조체로 변환된다. 파이버는 React 16 버전부터 도입된 구조체이다.
 >
 > 파이버도 React 요소와 같이 type, props 속성값을 가진다. 파이버로 동작할 때도 모든 type 속성값이 문자열이 될 때까지 연산한 다는 사실은 변합이 없다.
+
+---
+
+<br/>
+
+## 4. Context API
+
+하위 컴포넌트의 깊이가 깊어지면, 속성값을 내려 주는 코드를 반복적으로 작성해야 한다. 추적이 힘들어져서 유지보수가 어려워진다.
+
+이럴 때, 콘텍스트 API를 사용하면 컴포넌트의 중첩 구조가 복잡한 상황에서도 비교적 쉽게 데이터를 전달할 수 있다.
+
+콘텍스트 API는 상위 컴포넌트에서 하위에 있는 모든 컴포넌트들에게 직접 선택적으로 데이터를 전달할 수 있다.
+
+```jsx
+// TestCtxt.js
+import React from 'react';
+
+const UserContext = React.createContext('');
+
+export default function TestCtxt(){
+  return (
+    <div>
+      <UserContext.Provider value={'SinJ'}>
+        <div>상단메뉴</div>
+        <Profile/>
+        <div>하단메뉴</div>
+      </UserContext.Provider>
+    </div>
+  )
+}
+
+function Profile(){
+  return (
+    <div>
+      <Greeting/>
+    </div>
+  )
+}
+
+function Greeting(){
+  return (
+    <UserContext.Consumer>
+      {username => <p>{`${username}님 안녕하세요`}</p>}
+    </UserContext.Consumer>
+  )
+}
+```
+
+`createContext()`를 호출하면 콘텍스트 객체가 생성된다. 
+
+```jsx
+// createContext() 함수 구조
+React.createContext(defaultValue) => {Provider, Consumer}
+```
+
+- 상위 컴포넌트에서는 `Provider` 컴포넌트를 이용해서 데이터를 전달한다.
+- 하위 컴포넌트에서는 `Consumer` 컴포넌트를 이용해서 데이터를 사용한다.
+
+`Consumer` 컴포넌트는 데이터를 찾기 위해 상위로 올라가면서 가장 가까운 `Provider` 컴포넌트를 찾는다. 만약 최상위까지 `Provider`를 찾지 못하면 기본값이 사용된다.
+
+`Provider` 컴포넌트의 속성값이 변경되면 **하위의 모든 `Consumer` 컴포넌트는 다시 렌더링** 된다. 중요한 점은 중간에 위치한 컴포넌트의 여부와 상관없이 다시 렌더링 된다.
+
+```jsx
+// TestCtxt.js
+import React, { useState } from 'react'
+
+const UserContext = React.createContext('');
+
+export default function TestCtxt2(){
+  const [username, setUsername] = useState('');
+  console.log('render TestCtxt2');
+  return (
+    <div>
+      <UserContext.Provider value={username}>
+        <Profile/>
+        <input 
+          type="text"
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+        />
+      </UserContext.Provider>
+    </div>
+  )
+}
+
+const Profile = React.memo(() => { // 속성값이 없기 때문에 최초 한 번만 렌더링
+  console.log('render Profile');
+  return (
+    <div>
+      <Greeting/>
+    </div>
+  );
+});
+
+function Greeting(){
+  return (
+    <UserContext.Consumer>
+      {username => {
+        console.log('render Greeting');
+        return <p>{`${username}님 안녕하세요`}</p>
+      }}
+    </UserContext.Consumer>
+  );
+}
+```
+
+![image-20201215165829485](readme_img\image-20201215165829485.png)
+
+<br/>
+
+### Context API 활용
+
+#### 1. 여러 콘텍스트를 중첩해서 사용하기
+
+```jsx
+// TestMultiCtxt.js
+import React from 'react'
+
+const UserContext = React.createContext('');
+const ThemeContext = React.createContext('dark');
+
+export default function TestMultiCtxt() {
+  return (
+    <div>
+      <ThemeContext.Provider value={'light'}>
+        <UserContext.Provider value={'SinJ'}>
+          <div>상단 메뉴</div>
+          <Profile/>
+          <div>하단 메뉴</div>
+        </UserContext.Provider>
+      </ThemeContext.Provider>
+    </div>
+  );
+}
+
+function Profile() {
+  return (
+    <div>
+      <Greeting/>
+    </div>
+  );
+}
+
+function Greeting() {
+  return (
+    <ThemeContext.Consumer>
+      {theme => (
+        <UserContext.Consumer>
+          {username => (
+            <p 
+              style={{ color: theme === 'dark' ? 'gray' : 'green' }}
+            >{`${username}님 안녕하세요`}</p>
+          )}
+        </UserContext.Consumer>
+      )}
+    </ThemeContext.Consumer>
+  );
+}
+```
+
+두 개의 `Provider` 컴포넌트를 중첩해서 사용할 수 있다. `Consumer` 도 마찬가지 이다.
+
+렌더링 성능상 이점이 없긴 하지만, 보통 이렇게 종류별로 콘텍스트를 만들어서 사용하면 렌더링 성능상 이점이 있다. 이는 데이터 변경 시 해당 `Consumer`  컴포넌트만 렌더링되기 때문이다.
+
+<br/>
+
+#### 2. 하위 컴포넌트에서 콘텍스트 데이터를 수정하기
+
+리덕스에서 상태를 변경하는 디스패치(dispatch) 함수를 여러 컴포넌트에서 사용할 수 있는 것처럼, 콘텍스트 데이터도 원하는 곳에서 변경할 수 있다.
+
+```jsx
+// TestChangeCtxt.js
+import React, { useState, useEffect } from 'react';
+
+const UserContext = React.createContext({ username: "", helloCount: 0 });
+const SetUserContext = React.createContext(() => {}); // 함수 전달 콘텍스트
+
+export default function TestChangeCtxt() {
+  const [user, setUser] = useState({ username: 'SinJ', helloCount: 0 });
+
+  return (
+    <div>
+      <SetUserContext.Provider value={setUser}>
+        <UserContext.Provider value={user}>
+          <Profile/>
+        </UserContext.Provider>
+      </SetUserContext.Provider>
+    </div>
+  );
+}
+
+function Profile() {
+  return (
+    <div>
+      <Greeting/>
+    </div>
+  );
+}
+
+function Greeting() {
+  return (
+    <SetUserContext.Consumer>
+      {setUser => (
+        <UserContext.Consumer>
+          {({username, helloCount}) => (
+            <>
+              <p>{`${username}님 안녕하세요`}</p>
+              <p>{`인사 횟수: ${helloCount}`}</p>
+              <button
+                onClick={() => setUser({username, helloCount: helloCount + 1})}
+              >
+                인사하기
+              </button>
+            </>
+          )}
+        </UserContext.Consumer>
+      )}
+    </SetUserContext.Consumer>
+  );
+}
+```
+
+수정하는 함수를 전달하기 위한 콘텍스트를 생성하고 `Provider`를 통해 전달한다.
+
+<br/>
+
+### 주의할 점
+
+#### 1. 불필요한 렌더링 발생
+
+콘텍스트 데이터로 **객체를 사용할 때 주의하지 않으면 불필요한 렌더링이 발생**할 수 있다.
+
+```jsx
+const UserContext = React.createContext({ username: '' });
+
+function App() {
+    const [username, setUsername] = useState('');
+    return (
+    	<div>
+        	<UserContext.Provider value={{ username }}>
+            //...
+        </div>    
+    )
+}
+```
+
+콘텍스트 데이터로 객체를 전달하고 있다. 이처럼 작성하면 **컴포넌트가 렌더링될 때마다 새로운 객체가 생성**된다. 따라서 `username` 값이 **변경되지 않아도, 컴포넌트가 렌더링될 때마다 `Consumer` 컴포넌트도 다시 렌더링**된다. 
+
+위의 문제를 해결하려면 다음과 같이 작성해야한다.
+
+```jsx
+const UserContext = React.createContext({ username: '' });
+
+function App() {
+    const [user, setUsername] = useState({ username: '' });
+    return (
+    	<div>
+        	<UserContext.Provider value={user}>
+            //...
+        </div>    
+    )
+}
+```
+
+콘텍스트 데이터 자체를 상탯값으로 관리한다. `username` 값이 변경될 때만 새로운 객체가 전달되므로 불필요한 렌더링이 발생하지 않는다.
+
+<br/>
+
+#### 2. Provider를 찾지 못하는 경우
+
+`Consumer`와 `Provider`를 적절한 위치에서 사용하지 않으면 콘텍스트 데이터가 전달되지 않는다.
+
+앞서 말했듯이 `Consumer`가 최상위에 도달할 때까지 `Provider`를 찾지 못하면 콘텍스트 데이터의 기본값이 사용된다.
+
+---
+
+<br/>
+
+## 5. ref
+
+React로 작업하다 보면 **DOM 요소에 직접 접근**해야 할 때가 있다. DOM 요소에 포커스를 주거나, DOM 요소의 크기나 스크롤 위치를 알고 싶은 경우다.
+
+이때 **ref 속성값을 이용하면 자식 요소에 직접 접근**할 수 있다. 자식 요소는 컴포넌트일 수도 있고 DOM 요소일 수도 있다.
+
+<br/>
+
+### ref 속성값의 이해
+
+다음은 `ref`를 이용해서 DOM 요소를 제어하는 코드다.
+
+```jsx
+// TestRef.js
+import React, { useRef, useEffect } from 'react';
+
+export default function TestRef() {
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  return (
+    <div>
+      <input type="text" ref={inputRef}/>
+      <button>저장</button>
+    </div>
+  )
+}
+```
+
+`useRef` 훅이 반환하는 ref 객체를 이용해서 자식 요소에 접근할 수 있다. 접근하고자 하는 자식 요소의 ref 속성에 ref 객체를 입력하면, 해당 DOM 요소 혹은 컴포넌트가 생성되면 ref 객체로 접근할 수 있다. ref 객체의 current 속성을 이용하면 자식 요소에 접근할 수 있다.
+
+`useEffect` 훅 내부에서 자식요소에 접근하고 있다는 점에 주목하자. 부수 효과 함수는 컴포넌트 렌더링 결과가 DOM에 반영된 후에 호출되므로 해당 DOM 요소는 이미 생성된 상태다.
+
+<br/>
+
+### ref 활용
+
