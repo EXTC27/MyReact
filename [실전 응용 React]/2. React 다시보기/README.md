@@ -106,7 +106,20 @@ export default React.memo(Title);
 
 ### 불변 객체로 관리하는 속성값, 상태값
 
-props는 불변(immutable) 변수이지만, state는 불변 변수가 아니다. 하지만 state도 불변 변수로 관리하는게 좋다. 불변 변수로 관리하면 코드의 복잡도가 낮아진다.
+props는 불변(immutable) 변수이지만, state는 불변 변수가 아니다. 하지만 state도 불변 변수로 관리하는게 좋다. 불변 변수로 관리하면 side-effect를 줄이고, 코드의 복잡도가 낮아진다.
+
+```jsx
+function MyComponent(){
+	const [count, setCount] = useState({ value: 0 });
+    function onClick(){
+        count.value = 2; // 상태값이 변경되지 않는다.
+        setCount(count); // 상태값이 변경되지 않는다. 
+    }
+    /*...*/
+}
+```
+
+
 
 ---
 
