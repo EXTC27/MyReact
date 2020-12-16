@@ -514,3 +514,91 @@ export default function TestRef() {
 
 ### ref 활용
 
+#### 1. 함수형 컴포넌트에서 ref 사용하기
+
+클래스형 컴포넌트에 `ref` 속성값을 입력하면 `ref.current`는 **해당 컴포넌트의 인스턴스**를 가리킨다. 따라서 `ref.current`를 통해 해당 클래스의 메서드를 호출할 수 있다.
+
+함수형 컴포넌트는 인스턴스로 만들어지지 않지만, `useImperativeHandle` 훅을 사용하면 함수형 컴포넌트에서도 변수와 함수를 외부로 노출시킬 수 있다.
+
+함수형 컴포넌트에 `ref` 속성값을 입력할 수는 없지만, 다른 이름으로 `ref` 객체를 입력받아서 내부의 리액트 요소에 연결할 수 있다. 속성값을 함수의 매개변수로 입력받으면 된다.
+
+```jsx
+// TestInputRef.js
+import React, { useRef, useEffect } from 'react';
+
+export default function TestInputRef() {
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  return (
+    <div>
+      <TextInput inputRef={inputRef}/>
+      <button onClick={() => inputRef.current.focus()}>텍스트로 이동</button>
+    </div>
+  )
+}
+
+function TextInput({ inputRef }) {
+  return (
+    <div>
+      <input type="text" ref={inputRef}/>
+      <button>저장</button>
+    </div>
+  );
+}
+```
+
+위의 코드와 같이 `inputRef` 속성값을 input의 `ref` 속성값으로 넣고있다. 부모 컴포넌트 입장에서는 손자 요소에 `ref` 속성값을 넣는 형태가 된다.
+
+하지만, 위와 같은 방법은 **컴포넌트의 내부 구조를 외부에서 알아야 하므로 좋은 방법은 아니다. **꼭 필요한 경우에만 사용하는 것이 좋다.
+
+<br/>
+
+#### 2. `forwardRef()`로 ref 속성값 직접 처리하기
+
+재사용 성을 높이기 위해 Button 처럼 단순한 컴포넌트를 만들어서 사용하는 경우가 많다. 이런 작은 컴포넌트는 DOM 요소와 밀접하게 연관되어 있기 때문에 `ref`를 손자 요소로 연결하는 게 자연스럽다.
+
+하지만 컴포넌트에 `ref` 속성을 사용하면 React가 내부적으로 처리하기 때문에 손자 요소에 연결할 수 없다.
+
+이럴 때 `forwardRef()`를 사용하면 `ref` 속성값을 직접 처리할 수 있다.
+
+```jsx
+// TestForwardRef.js
+import React, { useRef, useEffect } from 'react';
+
+export default function TestForwardRef() {
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
+  return (
+    <div>
+      <TextInput ref={inputRef}/>
+      <button onClick={() => inputRef.current.focus()}>텍스트로 이동</button>
+    </div>
+  )
+}
+
+const TextInput = React.forwardRef((props, ref) => (
+  <div>
+    <input type="text" ref={ref}/>
+    <button>저장</button>
+  </div>
+));
+```
+
+`forwardRef()`를 이용하면 부모 컴포넌트에서 넘어온 `ref` 속성값을 직접 처리할 수 있다. 이전에 `inputRef`로 사용했던 이름을 React의 예약어인 `ref`로 사용할 수 있다.
+
+<br/>
+
+#### 3. ref 속성값으로 함수 사용하기
+
+`ref` 속성값에 **함수를 입력하면 자식 요소가 생성되거나 제거되는 시점에 호출**된다.
+
+```jsx
+
+```
+

@@ -2,6 +2,9 @@ import TestChangeCtxt from "./components/context/TestChangeCtxt";
 import TestCtxt from "./components/context/TestCtxt";
 import TestCtxt2 from "./components/context/TestCtxt2";
 import TestMultiCtxt from "./components/context/TestMultiCtxt";
+import TestForwardRef from "./components/ref/TestForwardRef";
+import TestFuncRef from "./components/ref/TestFuncRef";
+import TestInputRef from "./components/ref/TestInputRef";
 import TestRef from "./components/ref/TestRef";
 
 function App() {
@@ -28,6 +31,19 @@ function App() {
       <h2>ref로 DOM 제어</h2>
       <TestRef/>
       <br/>
+      
+      <h2>inputRef</h2>
+      <TestInputRef/>
+      <br/>
+
+      <h2>forwardRef</h2>
+      <TestForwardRef/>
+      <br/>
+
+      <h2>ref에 함수 사용</h2>
+      <TestFuncRef/>
+      <br/>
+
     </div>
   );
 }
