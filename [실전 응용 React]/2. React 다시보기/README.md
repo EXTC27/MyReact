@@ -599,6 +599,84 @@ const TextInput = React.forwardRef((props, ref) => (
 `ref` 속성값에 **함수를 입력하면 자식 요소가 생성되거나 제거되는 시점에 호출**된다.
 
 ```jsx
+// TestFuncRef.js
+import React, { useState } from 'react';
+
+const INITIAL_TEXT = '안녕하세요';
+
+export default function TestFuncRef() {
+  const [text, setText] = useState(INITIAL_TEXT);
+  const [showText, setShowText] = useState(true);
+
+  return (
+    <div>
+      {showText && (
+        <input 
+          type="text"
+          ref={ref => ref && setText(INITIAL_TEXT)}
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
+      )}
+      <button onClick={() => setShowText(!showText)}>
+        보이기/가리기
+      </button>
+    </div>
+  );
+}
+```
+
+`ref` 속성값으로 입력한 함수는 해당 요소가 제거되거나 생성될 때마다 호출된다. 요소가 생성될 때는 해당 요소를 참조하는 변수가 넘어오고, 삭제될 때는 null 값이 넘어온다. 따라서 위의 코드에서 `button` 요소가 생성될 때만 `INITIAL_TEXT`가 입력되도록 했다.
+
+하지만 코드를 실행하면 의도한 대로 동작하지 않는다. `input` 요소에 텍스트를 입력해도 화면에는 `INITIAL_TEXT`만 보인다. 컴포넌트가 **렌더링될 때마다 새로운 함수를 `ref` 속성값**으로 넣기 때문이다. React는 `ref` 속성값으로 새로운 함수가 들어오면 이전 함수에 `null` 인수를 넣어서 호출하고, 새로운 함수에는 요소의 참조값을 넣어서 호출한다. 따라서 텍스트를 입력하면 컴포넌트가 렌더링되고, `ref` 속성값에 입력된 새로운 함수가 호출되면서 `INITIAL_TEXT`로 덮어 쓰는 것이다.
+
+위와 같은 문제는 다음과 같이 **고정된 함수**를 입력하면 해결된다.
+
+```jsx
+// TestFuncRef2.js
+import React, { useState, useCallback } from 'react';
+
+const INITIAL_TEXT = '안녕하세요';
+
+export default function TestFuncRef2() {
+  const [text, setText] = useState(INITIAL_TEXT);
+  const [showText, setShowText] = useState(true);
+
+  const setInitialText = useCallback(
+    ref => ref && setText(INITIAL_TEXT),
+    []);
+
+  return (
+    <div>
+      {showText && (
+        <input 
+          type="text"
+          ref={setInitialText}
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
+      )}
+      <button onClick={() => setShowText(!showText)}>
+        보이기/가리기
+      </button>
+    </div>
+  );
+}
+```
+
+`useCallback` 훅을 이용해서 `setInitialText()` 함수를 변하지 않게 했다. `useCallback`의 메모이제이션 기능 덕분에 한 번 생성된 함수를 계속 재사용한다는 것만 알아두자.
+
+`ref` 속성값에 새로운 함수를 입력하지 않으므로, `input` 요소가 생성되거나 제거될 때만 `setInitialText()` 함수가 호출된다.
+
+이렇게 `ref` 속성값으로 함수를 사용하면 DOM 요소의 생성과 제거 시점을 알 수 있다. 
+
+<br/>
+
+#### 4. ref 속성값 사용 시 주의할 점
+
+컴포넌트가 생성된 이후라도 `ref` 객체의 **current 속성이 없을 수 있기 때문**에 주의해야 한다.
+
+```jsx
 
 ```
 

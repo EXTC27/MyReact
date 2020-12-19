@@ -4,6 +4,7 @@ import TestCtxt2 from "./components/context/TestCtxt2";
 import TestMultiCtxt from "./components/context/TestMultiCtxt";
 import TestForwardRef from "./components/ref/TestForwardRef";
 import TestFuncRef from "./components/ref/TestFuncRef";
+import TestFuncRef2 from "./components/ref/TestFuncRef2";
 import TestInputRef from "./components/ref/TestInputRef";
 import TestRef from "./components/ref/TestRef";
 
@@ -42,6 +43,10 @@ function App() {
 
       <h2>ref에 함수 사용</h2>
       <TestFuncRef/>
+      <br/>
+
+      <h2>ref에 고정 함수 사용</h2>
+      <TestFuncRef2/>
       <br/>
 
     </div>
