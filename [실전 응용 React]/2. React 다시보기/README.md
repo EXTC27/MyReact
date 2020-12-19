@@ -672,7 +672,7 @@ export default function TestFuncRef2() {
 
 <br/>
 
-#### 4. ref 속성값 사용 시 주의할 점
+### ref 속성값 사용 시 주의할 점
 
 컴포넌트가 생성된 이후라도 `ref` 객체의 **current 속성이 없을 수 있기 때문**에 주의해야 한다.
 

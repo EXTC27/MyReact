@@ -441,3 +441,57 @@ CRA로 프로젝트를 생성하면, 위의 두 규칙을 강제하는 ESLint �
 
 React는 **훅이 호출되는 순서에 의존**하기 때문에, 특정 상탯값이 어떤 `useState` 호출에 해당하는지 알 수 있다. 조건문, 반복문, 중첩된 함수안에 훅을 호출하면, 호출이 누락될 수도 있기 때문에 호출 순서가 밀리면서 버그가 발생한다.
 
+---
+
+<br/>
+
+## 5. Consumer 없이 콘텍스트 사용하기 `useContext`
+
+`useContext`를 이용하면 `Consumer` 컴포넌트를 사용하지 않고도 부모 컴포넌트로부터 전달된 콘텍스트 데이터를 사용할 수 있다.
+
+```jsx
+// TestUseContext.js
+import React, { useState, useEffect, useContext } from 'react';
+
+const UserContext = React.createContext();
+const user = { name: 'SinJ', age: 27 };
+
+export default function TestUserContext() {
+  return (
+    <UserContext.Provider value={user}>
+      <Child/>
+    </UserContext.Provider>
+  );
+}
+
+function Child() {
+  const user = useContext(UserContext);
+  console.log(user); // Consumer 컴포넌트 밖에서도 콘텍스트 데이터를 사용할 수 있다.
+
+  return (
+    <>
+      <p>{`name is ${user.name}`}</p>
+      <p>{`age is ${user.age}`}</p>
+      <br/>
+      <UserContext.Consumer>
+        {user => (
+          <>
+            <p>{`name is ${user.name}`}</p>
+            <p>{`age is ${user.age}`}</p>
+          </>
+        )}
+      </UserContext.Consumer>
+    </>
+  );
+}
+```
+
+---
+
+<br/>
+
+## 6. 렌더링과 무관한 값 저장하기 `useRef`
+
+`useRef`는 자식 요소에 접근하는 것 외에도 중요한 용도가 한 가지 더 있다. 
+
+컴포넌트 내부에서 생성되는 값 중에는 렌더링과 무관한 값도 있다. 이 값을 저장할 때 `useRef`를 쓴다.

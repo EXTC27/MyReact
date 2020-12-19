@@ -8,6 +8,7 @@ import TestCallAPI from './components/useEffect/TestCallAPI';
 import TestCustomCallAPI from './components/customHook/TestCustomCallAPI';
 import TestCustomEventListener from './components/customHook/TestCustomEventListener';
 import TestCustomMounted from './components/customHook/TestCustomMounted';
+import TestUserContext from './components/TestUseContext';
 
 
 function App() {
@@ -56,6 +57,11 @@ function App() {
 
       <h2>마운트 커스텀 훅</h2>
       <TestCustomMounted/>
+      <br/>
+      <hr/>
+
+      <h2>useContext 훅</h2>
+      <TestUserContext/>
       <br/>
 
     </div>
