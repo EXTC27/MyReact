@@ -495,3 +495,38 @@ function Child() {
 `useRef`는 자식 요소에 접근하는 것 외에도 중요한 용도가 한 가지 더 있다. 
 
 컴포넌트 내부에서 생성되는 값 중에는 렌더링과 무관한 값도 있다. 이 값을 저장할 때 `useRef`를 쓴다.
+
+밑의 코드는 `useRef`를 사용해서 잊전 상탯값을 저장하는 코드이다.
+
+```jsx
+// TestUseRef.js
+import React, { useState, useEffect, useRef } from 'react';
+
+export default function TestUseRef() {
+  const [age, setAge] = useState(20);
+  const prevAgeRef = useRef(20);
+
+  useEffect(() => {
+    prevAgeRef.current = age;
+  },[age]);
+
+  const prevAge = prevAgeRef.current;
+  const text = age === prevAge ? 'same' : age > prevAge ? 'older' : 'younger';
+  return (
+    <div>
+      <p>{`age ${age} is ${text} than age ${prevAge}`}</p>
+      <button 
+        onClick={() => {
+          const age = Math.floor(Math.random() * 50 + 1);
+          setAge(age);
+        }}
+      >
+        나이 변경
+      </button>
+    </div>
+  );
+}
+```
+
+위의 코드에서 `age`의 이전 상태값을 저장하기 위한 용도로 `useRef`를 사용한다. `age` 값이 변경되면, `useEffect`에서 이전 값을 `prevAgeRef`에 저장한다. `age`가 변경돼서 다시 렌더링할 때 `prevAge`는 `age`의 이전 상탯값을 나타낸다. 그리고 렌더링이 끝나면 `prevAgeRef`는 `age`의 최신 상태값으로 변경된다.
+

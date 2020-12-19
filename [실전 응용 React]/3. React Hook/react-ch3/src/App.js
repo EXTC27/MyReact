@@ -9,6 +9,7 @@ import TestCustomCallAPI from './components/customHook/TestCustomCallAPI';
 import TestCustomEventListener from './components/customHook/TestCustomEventListener';
 import TestCustomMounted from './components/customHook/TestCustomMounted';
 import TestUserContext from './components/TestUseContext';
+import TestUseRef from './components/TestUseRef';
 
 
 function App() {
@@ -62,6 +63,11 @@ function App() {
 
       <h2>useContext 훅</h2>
       <TestUserContext/>
+      <br/>
+      <hr/>
+
+      <h2>useRef로 렌더링과 무관한 값 저장</h2>
+      <TestUseRef/>
       <br/>
 
     </div>
