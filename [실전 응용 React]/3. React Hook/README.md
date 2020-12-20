@@ -624,3 +624,195 @@ function Profile() {
 }
 ```
 
+`useCallback`의 첫 번째 매개변수로 함수를 입력하고, 두 번째 매개변수는 의존성 배열을 입력한다.
+
+의존성 배열이 변경되지 않으면 이전에 생성한 함수가 재사용된다.
+
+---
+
+<br/>
+
+## 8. 컴포넌트의 상탯값을 리덕스처럼 관리 `useReducer`
+
+`useReducer`를 사용하면 컴포넌트의 상탯값을 리덕스의 리듀서처럼 관리할 수 있다.
+
+```jsx
+// TestUseReducer.js
+import React, { useReducer } from 'react';
+
+const INITIAL_STATE = { name: 'empty', age: 0 };
+function reducer(state, action) {
+  switch (action.type){
+    case 'setName':
+      return { ...state, name: action.name };
+    case 'setAge':
+      return { ...state, age: action.age };
+    default:
+      return state;
+  }
+}
+
+export default function TestUseReducer() {
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  return (
+    <div>
+      <p>{`name is ${state.name}`}</p>
+      <p>{`age is ${state.age}`}</p>
+      <input
+        type="text"
+        value={state.name}
+        onChange={e => 
+  		dispatch({ type: 'setName', name: e.currentTarget.value })}
+      />
+      <input
+        type="text"
+        value={state.age}
+        onChange={e => 
+  		dispatch({ type: 'setAge', age: e.currentTarget.value })}
+      />
+    </div>
+  );
+}
+```
+
+리덕스의 리듀서와 같은 방식으로 작성한 리듀서 함수이다.
+
+`useReducer` 훅의 매개변수로 앞에서 작성한 리듀서와 초기 상탯값을 입력한다. `useReducer`는 상탯값과 `dispatch` 함수를 차례대로 반환한다. 
+
+<br/>
+
+### 트리의 깊은 곳으로 이벤트 처리 함수 전달
+
+보통 상위 컴포넌트에서 다수의 상태값을 관리한다. 이때 자식 컴포넌트로부터 발생한 이벤트에서 상위 컴포넌트의 상탯값을 변경해야 하는 경우가 많다. 이를 위해 상위 컴포넌트에서 트리의 깊은 곳까지 이벤트 처리 함수를 전달하는데, 손이 많이 가고 가독성이 떨어진다.
+
+`useReducer`와 콘텍스트 API를 통해서 상위 컴포넌트에서 트리 깊은 곳으로 이벤트 처리 함수를 쉽게 전달할 수 있다.
+
+```jsx
+//...
+export const ProfileDispatch = React.createContext(null);
+//...
+function Profile() {
+    const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+    return (
+    	<div>
+        	<p>{`name is ${state.name}`}</p>
+		    <p>{`age is ${state.age}`}</p>
+            <ProfileDispatch.Provider value={dispatch}>
+                <ChildComponent/>
+            </ProfileDispatch.Provider>
+        </div>
+    )
+}
+```
+
+`dispatch` 함수를 전달해 주는 콘텍스트 객체를 생성한다. `Provider` 컴포넌트를 통해서 `dispatch` 함수를 데이터로 전달한다. 하위에 있는 모든 컴포넌트에서는 콘텍스트를 통해서 `dispatch` 함수를 호출할 수 있다.
+
+`useReducer` 훅의 `dispatch` 함수는 값이 변하지 않는 특징이 있어서 콘텍스트의 `Consumer` 컴포넌트가 불필요하게 자주 렌더링되는 일은 발생하지 않는다.
+
+---
+
+<br/>
+
+## 9. 부모 컴포넌트에서 접근 가능한 함수 구현 `useImperativeHandle`
+
+부모 컴포넌트는 `ref` 객체를 통해 클래스형 컴포넌트인 자식 컴포넌트의 메서드를 호출할 수 있다.
+
+이 방식은 자식 컴포넌트의 내부 구현에 대한 의존성이 생기므로 지양해야 하지만, 필요한 경우가 종종 생긴다.
+
+`useImerativeHandle`를 이용하면 마치 **함수형 컴포넌트에도 메소드가 있는 것처럼** 만들 수 있다.
+
+<br/>
+
+### 외부로 공개할 함수 정의
+
+`useImperativeHandle`를 이용해서 부모 컴포넌트에서 접근 가능한 함수를 구현한 코드이다.
+
+```jsx
+// TestUseIH.js
+import React, { forwardRef, useState, useImperativeHandle } from 'react';
+
+function TestUseIH(props, ref) {
+  const [name, setName] = useState('');
+  const [age, setAge] = useState(0);
+
+  useImperativeHandle(ref, () => ({
+    addAge: value => setAge(age + value),
+    getNameLength: () => name.length,
+  }));
+
+  return (
+    <div>
+      <p>{`name is ${name}`}</p>
+      <p>{`age is ${age}`}</p>
+    </div>
+  );
+}
+
+export default forwardRef(TestUseIH);
+```
+
+부모에서 입력한 `ref` 객체를 직접 처리하기 위해 `forwardRef()` 함수를 호출한다. `useImperativeHandle` 훅으로 `ref` 객체와 부모 컴포넌트에서 접근 가능한 여러 함수를 입력한다.
+
+ <br/>
+
+### 외부에서 함수 호출
+
+위의 코드에서 `useImperativeHandle` 훅을 통해 정의한 함수들을 외부에서 사용해보자.
+
+```jsx
+// TestUseIHParent.js
+import React, { useRef } from 'react';
+import TestUseIH from './TestUseIH';
+
+export default function TestUseIHParent() {
+  const profileRef = useRef();
+  const onClick = () => {
+    if(profileRef.current){
+      console.log('current name length:',
+      profileRef.current.getNameLength());
+      profileRef.current.addAge(5); // ref를 통해서 함수를 호출할 수 있다.
+    }
+  }
+
+  return (
+    <div>
+      <TestUseIH ref={profileRef}/>
+      <button onClick={onClick}>add age 5</button>
+    </div>
+  );
+}
+```
+
+---
+
+<br/>
+
+## 10. 기타 내장 훅
+
+### `useLayoutEffect`
+
+`useEffect` 훅에 입력된 부수 효과 함수는 **렌더링 결과가 DOM에 반영된 후 비동기로 호출**된다.
+
+`useLayoutEffect`는 `useEffect`와 거의 비슷하게 동작하지만, **부수 효과 함수를 동기로 호출**한다는 점이 다르다. 즉, `useLayoutEffect` 훅의 부수 효과 함수는 **렌더링 결과가 DOM에 반영된 직후에 호출**된다.
+
+>`useLayoutEffect`의 부수 효과 함수에서 연산을 많이 하면 브라우저가 먹통이 될 수 있으므로 주의해야 한다. (싱글 스레드인데 동기로 동작되면...)
+>
+>특별한 이유가 없다면 `useEffect`를 사용하는 것이 성능상 이점이 있다. 
+>
+>렌더링 직후 DOM 요소의 값을 읽는 경우에는 `useLayoutEffect`를 사용하는 것이 적합하다.
+
+<br/>
+
+### `useDebugValue`
+
+개별 편의를 위해 제공되는 훅이다. `useDebugValue`를 사용하면 커스텀 훅의 내부 상태를 관찰할 수 있기 때문에 디버깅에 도움이 된다. `useDebugValue`는 **React 개발자 도구에서 확인** 할 수 있다.
+
+```jsx
+function useToggle(initValue) {
+    const [value, setValue] = useState(initValue);
+    const onToggle = () => setValue(!value);
+    useDebugValue(value ? 'on': 'off'); // 디버깅 시 확인할 값을 매개변수로 입력
+    return [value, onToggle];
+}
+```
+

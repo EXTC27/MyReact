@@ -10,6 +10,8 @@ import TestCustomEventListener from './components/customHook/TestCustomEventList
 import TestCustomMounted from './components/customHook/TestCustomMounted';
 import TestUserContext from './components/TestUseContext';
 import TestUseRef from './components/TestUseRef';
+import TestUseReducer from './components/TestUseReducer';
+import TestUseIHParent from './components/TestUseIHParent';
 
 
 function App() {
@@ -69,6 +71,17 @@ function App() {
       <h2>useRef로 렌더링과 무관한 값 저장</h2>
       <TestUseRef/>
       <br/>
+      <hr/>
+
+      <h2>useReducer</h2>
+      <TestUseReducer/>
+      <br/>
+      <hr/>
+
+      <h2>useImperativeHandle</h2>
+      <TestUseIHParent/>
+      <br/>
+      <hr/>
 
     </div>
   );
