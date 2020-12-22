@@ -145,7 +145,7 @@ function User({ type, age, male, onChangeName, onChangeTitle }){
 
 ```jsx
 MyComponent.propTypes = {
-    // React 요소
+    // 1. React 요소
     menu: PropTypes.element,
     /*
     <div>hello</div> => 참
@@ -153,19 +153,132 @@ MyComponent.propTypes = {
     123 => 거짓
     */
     
-    
+    // 2. 컴포넌트 함수가 반환할 수 있는 모든 것
     description: PropTypes.node,
+    /*
+    number, string, array, element, ...
+    <SomComp/> => 참
+    123 => 참
+    */
+    
+    // 3. 클래스로 생성된 모든 객체
     message: PropTypes.instanceOf(Message),
-    name: PropTypes.onOf(['join', 'mike']),
+    /*
+    new Message() => 참
+    new Car() => 거짓
+    */
+    
+    // 4. 배열에 포함된 값 중에서 하나를 만족
+    name: PropTypes.oneOf(['jone', 'mike']),
+    /*
+    'jone' => 참
+    'messy' => 거짓
+    */
+    
+    // 5. 배열에 포함된 타입 중 하나를 만족
     width: PropTypes.onOfType([PropTypes.number, PropTypes.string]),
+    /*
+    123 => 참
+    'messy' => 참
+    */
+    
+    // 6. 특정 타입만 포함하는 배열
     ages: PropTypes.arrayof(PropTypes.number),
+    /*
+    [1, 5, 7] => 참
+    ['a', 'b'] => 거짓
+    */
+    
+    // 7. 객체의 속성값 타입을 정의
     info: PropTypes.shape({
         color: PropTypes.string,
         weight: PropTypes.number
     }),
+    /*
+    {color: 'red', weight: 123} => 참
+    {color: 'red', weight: '123kg'} => 거짓
+    */
+    
+    // 8. 객체에서 모든 속성값의 타입이 같은 경우
     infos: PropTypes.objectOf(PropTypes.number)
+    /*
+    {prop1: 123, prop2: 456} => 참
+    {prop1: 'red', prop2: 123} => 거짓
+    */
 };
 ```
 
+본인만의 타입 함수를 작성할 수도 있다.
 
+```jsx
+MyComp.propTypes = {
+	age: function(...) {
+		return ...;
+    }
+};
+```
 
+<br/>
+
+### 조건부 렌더링
+
+조건부 렌더링의 경우 삼항 연산자나 && 연산자를 사용하는 것이 좋다.
+
+```jsx
+function Greeting({ isLogin, name, cash }){
+    return (
+        <div>
+            {isLogin ? 
+            <div>
+                <p>{name}님 안녕하세요.</p>
+            </div>
+            : null}
+        </div>
+    );
+}
+```
+
+```jsx
+function Greeting({ isLogin, name, cash }){
+    return (
+        <div>
+            {isLogin && 
+            <div>
+            	<p>{name}님 안녕하세요.</p>
+            </div>}
+        </div>
+    );
+}
+```
+
+>**&& 연산자 사용 시 주의할 점**
+>
+>변수가 숫자 타입일 경우 0은 거짓, 문자열인 경우 빈 문자열은 거짓이다.
+>
+>&& 연산자를 사용할 때 자주 실수하는 내용이다.
+>
+>```jsx
+><div>
+>	{cash && <p>{case}원 보유 중</p>}
+>    {memo && <p>{200 - memo.length}자 입력 가능</p>}
+></div>
+>```
+>
+>'0원 보유 중'을 출력해야될 경우에 위의 코드는 출력되지 않는다. 의도치 않게 0만 출력될 것이다. memo의 경우도 빈 문자열이 출력될 것이다.
+>
+>이러한 경우에는 다음과 같이 작성해준다.
+>
+>```jsx
+><div>
+>	{cash !== null && <p>{case}원 보유 중</p>}
+>    {memo !== null && <p>{200 - memo.length}자 입력 가능</p>}
+></div>
+>```
+
+<br/>
+
+### 프레젠테이션, 컨테이너 컴포넌트 구분
+
+비즈니스 로직과 상탯값의 유무에 따라 프레젠테이션과 컨테이너 컴포넌트로 구분하는 방법을 알아보자.
+
+프로그래밍에서 관심사의 분리란 복잡한 코드를 비슷한 기능을 하는 코드끼리 모아서 별도로 관리하는 것을 말한다. UI 처리, API 호출, DB 관리 등의 코드가 같은 곳에 있으면 복잡하기 때문에 이들은 서로 관심사가 다르다고 보고 분리해서 관리하는 게 좋다. 
